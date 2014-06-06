@@ -26,15 +26,15 @@
 </head>
 <body>
 	<div class="container">
-		<header>
-			<div class="hidden-xs">
+		<header class="row">
+			<div class="hidden-xs col-md-12">
 				<h1 class="site-title">
 					Musicwhore.org
 					<small>Administration</small>
 				</h1>
 			</div>
 
-			<nav class="navbar navbar-inverse" role="navigation">
+			<nav class="navbar navbar-inverse col-md-12" role="navigation">
 				<div class="container-fluid">
 					<div class="navbar-header">
 						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-nav">
