@@ -1,0 +1,28 @@
+SetEnvIf HOST dev.admin.musicwhore.org dev
+SetEnvIf HOST test.admin.musicwhore.org test
+AuthType Basic
+AuthUserFile /home/nemesisv/.htpasswd
+AuthName "Musicwhore.org Administration development site"
+require valid-user
+
+Order allow,deny
+Allow from all
+Deny from env=dev
+Deny from env=test
+Satisfy any
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    # Redirect Trailing Slashes...
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
