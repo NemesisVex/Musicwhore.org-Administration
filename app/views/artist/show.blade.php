@@ -4,7 +4,7 @@
  &raquo; {{ $artist->artist_display_name }}
 @stop
 
-@section('section_header')
+@section('section_head')
 <h2>{{ $artist->artist_display_name }}</h2>
 @stop
 
@@ -13,118 +13,178 @@
 @stop
 
 @section('content')
+<div class="col-md-12">
+	<ul class="list-inline">
+		<li><a href="{{ route('artist.edit', array('id' => $artist->artist_id)) }}" class="button"><span class="glyphicon glyphicon-pencil"></span> Edit</a></li>
+		<li><a href="{{ route('artist.delete', array('id' => $artist->artist_id)) }}" class="button"><span class="glyphicon glyphicon-remove"></span> Delete</a></li>
+	</ul>
 
-<ul class="list-inline">
-	<li><a href="{{ route('artist.edit', array('id' => $artist->artist_id)) }}" class="button">Edit</a></li>
-	<li><a href="{{ route('artist.delete', array('id' => $artist->artist_id)) }}" class="button">Delete</a></li>
-</ul>
+	<ul class="list-unstyled">
+		<li class="row">
+			<label class="col-md-3">Last name:</label>
+			<div class="col-md-9">
+				{{ $artist->artist_last_name }}
+			</div>
+		</li>
+		@if (!empty($artist->artist_first_name))
+		<li class="row">
+			<label class="col-md-3">First name:</label>
+			<div class="col-md-9">
+				{{ $artist->artist_first_name }}
+			</div>
+		</li>
+		@endif
+		@if (!empty($artist->artist_display_name))
+		<li class="row">
+			<label class="col-md-3">Display name:</label>
+			<div class="col-md-9">
+				{{ $artist->artist_display_name }}
+			</div>
+		</li>
+		@endif
+		<li class="row">
+			<label class="col-md-3">File system alias:</label>
+			<div class="col-md-9">
+				{{ $artist->artist_file_system }}
+			</div>
+		</li>
+	</ul>
 
-<ul class="list-unstyled">
-	<li>
-		<div>
-			<label>Last name:</label> {{ $artist->artist_last_name }}
-		</div>
-	</li>
-	@if (!empty($artist->artist_first_name))
-	<li>
-		<div>
-			<label>First name:</label> {{ $artist->artist_first_name }}
-		</div>
-	</li>
+	<h3>Settings</h3>
+
+	<ul class="list-inline">
+		<li><a href="{{ route('artist-setting.edit', array('artist' => $artist->artist_id)) }}" class="button"><span class="glyphicon glyphicon-pencil"></span> Edit</a></li>
+	</ul>
+
+	<ul class="list-unstyled">
+		<li class="row">
+			<label class="col-md-3">Use Asian name format:</label>
+			<div class="col-md-9">
+				@if ($artist->meta->is_asian_name == true) Yes @else No @endif
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">J~E Artist:</label>
+			<div class="col-md-9">
+				@if ($artist->meta->is_je_artist == true) Yes @else No @endif
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">Classical Artist:</label>
+			<div class="col-md-9">
+				@if ($artist->meta->is_classical_artist == true) Yes @else No @endif
+			</div>
+		</li>
+	</ul>
+
+	<h4>Navigation display</h4>
+
+	<ul class="list-unstyled">
+		<li class="row">
+			<label class="col-md-3">Profile:</label>
+			<div class="col-md-9">
+				@if ($artist->meta->nav_profile == true) Yes @else No @endif
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">Discography:</label>
+			<div class="col-md-9">
+				@if ($artist->meta->nav_discography == true) Yes @else No @endif
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">Posts:</label>
+			<div class="col-md-9">
+				@if ($artist->meta->nav_posts == true) Yes @else No @endif
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">Shop:</label>
+			<div class="col-md-9">
+				@if ($artist->meta->nav_shop == true) Yes @else No @endif
+			</div>
+		</li>
+	</ul>
+
+	<h4>Ecommerce and external services</h4>
+
+	<ul class="list-unstyled">
+		<li class="row">
+			<label class="col-md-3">Musicbrainz GID:</label>
+			<div class="col-md-9">
+				{{ $artist->meta->musicbrainz_gid }}
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">Default Amazon locale:</label>
+			<div class="col-md-9">
+				{{ $artist->meta->default_amazon_locale }}
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">Default iTunes store:</label>
+			<div class="col-md-9">
+				{{ $artist->meta->default_itunes_store }}
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">iTunes ID:</label>
+			<div class="col-md-9">
+				{{ $artist->meta->itunes_id }}
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">YesAsia ID:</label>
+			<div class="col-md-9">
+				{{ $artist->meta->yesasia_id }}
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">eMusic SKU:</label>
+			<div class="col-md-9">
+				{{ $artist->meta->emusic_cjsku }}
+			</div>
+		</li>
+	</ul>
+
+	<h3>Albums</h3>
+
+	<ul class="list-inline">
+		<li><a href="{{ route( 'album.create', array( 'artist' => $artist->artist_id ) ) }}" class="button"><span class="glyphicon glyphicon-plus"></span> Add album</a></li>
+	</ul>
+
+	@if ($artist->albums->count() > 0)
+	<table class="table table-striped">
+		<thead>
+		<tr>
+			<th>&nbsp;</th>
+			<th>Title</th>
+			<th>Format</th>
+			<th>Release Date</th>
+			<th>Label</th>
+		</tr>
+		</thead>
+		<tbody>
+		@foreach ($artist->albums as $album)
+		<tr>
+			<td>
+				<ul class="list-inline">
+					<li><a href="{{ route( 'album.edit', array( 'id' => $album->album_id ) ) }}"><span class="glyphicon glyphicon-pencil"></span> <span class="sr-only">Edit</span></a></li>
+					<li><a href="{{ route( 'album.delete', array( 'id' => $album->album_id ) ) }}"><span class="glyphicon glyphicon-remove"></span> <span class="sr-only">Delete</span></a></li>
+				</ul>
+			</td>
+			<td><a href="{{ route( 'album.show', array( 'id' => $album->album_id ) ) }}">{{ $album->album_title }}</a></td>
+			<td>{{ $album->format->format_alias }}</td>
+			<td>{{ date('Y-m-d', strtotime($album->album_release_date)) }}</td>
+			<td>{{ $album->album_label }}</td>
+		</tr>
+		@endforeach
+		</tbody>
+	</table>
+	@else
+	<p>
+		This artist has no albums. Please <a href="{{ route( 'album.create', array( 'id' => $artist->artist_id ) ) }}">add one</a>.
+	</p>
 	@endif
-	@if (!empty($artist->artist_display_name))
-	<li>
-		<div>
-			<label>Display name:</label> {{ $artist->artist_display_name }}
-		</div>
-	</li>
-	@endif
-</ul>
-
-<h3>Albums</h3>
-
-{{ Form::open( array( 'route' => array( 'album.save-order' ), 'id' => 'save-order-form' ) ) }}
-<ul class="list-inline">
-	<li><a href="{{ route( 'album.create', array( 'artist' => $artist->artist_id ) ) }}" class="button"><span class="glyphicon glyphicon-plus"></span> Add album</a></li>
-	<li>
-		{{ Form::button( 'Save album order', array('id' => 'save-order', 'class' => 'button') ) }}
-		{{ Form::hidden('album_id', null) }}
-	</li>
-</ul>
-{{ Form::close() }}
-
-@if (count($artist->albums) > 0)
-<ol class="disc-list">
-	@foreach ($artist->albums as $album)
-	<li>
-		<div>
-			<ul class="list-inline">
-				<li><a href="{{ route( 'album.edit', array( 'id' => $album->album_id ) ) }}"><span class="glyphicon glyphicon-pencil"></span></a></li>
-				<li><a href="{{ route( 'album.delete', array( 'id' => $album->album_id ) ) }}"><span class="glyphicon glyphicon-remove"></span></a></li>
-				<li>
-					<span class="album-order-display">{{ $album->album_order }}</span>. <a href="{{ route( 'album.show', array( 'id' => $album->album_id ) ) }}">{{ $album->album_title }}</a>
-					{{ Form::hidden('album_id', $album->album_id) }}
-					{{ Form::hidden('album_order', $album->album_order) }}
-				</li>
-			</ul>
-		</div>
-	</li>
-	@endforeach
-</ol>
-@else
-<p>
-	This artist has no albums. Please <a href="{{ route( 'album.create', array( 'id' => $artist->artist_id ) ) }}">add one</a>.
-</p>
-@endif
-
-<div id="save-order-dialog">
-	<p class="msg"></p>
 </div>
-
-<script type="text/javascript">
-	$('.disc-list').sortable({
-		update: function (event, ui) {
-			var new_album_order = 1;
-			$(this).children().each(function () {
-				$(this).find('.album-order-display').html(new_album_order);
-				new_album_order++;
-			});
-		}
-	});
-	$('#save-order-dialog').dialog({
-		autoOpen: false,
-		modal: true,
-		buttons: {
-			"OK": function () {
-				$(this).dialog('close');
-			}
-		}
-	});
-	$('#save-order').click(function () {
-		var albums = [], album_order, album_id, album_info;
-		$('.track-list').children().each(function () {
-			album_order = $(this).find('.album-order-display').html();
-			album_id = $(this).find('input[name=album_id]').val();
-			album_info = {
-				'album_id': album_id,
-				'album_order': album_order
-			}
-			albums.push(album_info);
-		});
-		var _token = $('input[name=_token]').val();
-		var url = $('#save-order-form').attr('action');
-		var data = {
-			'albums': albums,
-			'_token': _token
-		};
-		$.post(url, data, function (result) {
-			$('#save-order-dialog').dialog('open');
-			$('#save-order-dialog').find('.msg').html(result);
-		}).error(function (result) {
-			var error_msg = 'Your request could not be completed. The following error was given: ' + result.statusText;
-			$('#save-order-dialog').dialog('open');
-			$('#save-order-dialog').find('.msg').html(error_msg);
-		});
-	});
-</script>
 @stop

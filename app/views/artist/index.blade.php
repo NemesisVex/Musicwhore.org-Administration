@@ -18,6 +18,13 @@
 	<a href="{{ route('artist.create') }}" class="button"><span class="glyphicon glyphicon-plus"></span> Add an artist</a>
 </p>
 
+<ul class="list-inline">
+	<li>Browse:</li>
+	@foreach ($artist_list as $artist_letter)
+	<li><a href="{{ route( 'artist.index', array( 'browse' => strtolower($artist_letter->nav) ) ) }}">{{ $artist_letter->nav }}</a></li>
+	@endforeach
+</ul>
+
 @if (!empty($artists))
 
 <ul class="list-unstyled">

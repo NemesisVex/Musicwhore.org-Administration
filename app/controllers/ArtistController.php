@@ -29,9 +29,12 @@ class ArtistController extends \BaseController {
 			$artists = Artist::orderBy('artist_last_name')->get();
 		}
 
+		$artist_model = new Artist;
+		$artist_list = $artist_model->getAllByInitialLetter();
 
 		$method_variables = array(
 			'artists' => $artists,
+			'artist_list' => $artist_list,
 		);
 
 		$data = array_merge($method_variables, $this->layout_variables);
@@ -92,6 +95,10 @@ class ArtistController extends \BaseController {
 	 */
 	public function show($id)
 	{
+		$id->albums->sortByDesc(function ($album) {
+			return $album->album_release_date;
+		});
+
 		$method_variables = array(
 			'artist' => $id,
 		);
@@ -111,7 +118,7 @@ class ArtistController extends \BaseController {
 	public function edit($id)
 	{
 		$method_variables = array(
-			'artist' => $id,
+			'artist' => $id->load('meta'),
 		);
 
 		$data = array_merge($method_variables, $this->layout_variables);
@@ -181,43 +188,43 @@ class ArtistController extends \BaseController {
 						foreach ($album->releases as $release) {
 							if (count($release->tracks) > 0) {
 								foreach ($release->tracks as $track) {
-									// Remove audio.
-									if (count($track->recording->audio) > 0) {
-										foreach ($track->recording->audio as $audio) {
-											$audio->delete();
-										}
-									}
-
-									// Remove recording.
-									$track->recording()->delete();
+									// Remove track settings
+									$track->meta()->delete();
 
 									// Remove ecommerce and content by tracks.
-									$track->ecommerce()->delete();
+									//$track->ecommerce()->delete();
 								}
+
+								// Remove release meta
+								$release->meta()->delete();
 
 								// Remove tracks.
 								$release->tracks()->delete();
 
+
 								// Remove ecommerce.
-								$release->ecommerce()->delete();
+								//$release->ecommerce()->delete();
 							}
 						}
 					}
 
 					// Remove releases.
 					$album->releases()->delete();
+
+					// Remove album settings.
+					$album->meta()->delete();
 				}
 			}
 
 			// Remove albums.
 			$id->albums()->delete();
 
+			// Remove artist settings.
+			$id->meta()->delete();
+
 			// Remove artist.
 			$artist_id = $id->artist_id;
 			$id->delete();
-
-			// Remove primary artist ID from songs, but do not remove songs.
-			$songs = Song::where('song_primary_artist_id', $artist_id)->update(array( 'song_primary_artist_id' => 0 ));
 
 			return Redirect::route('artist.index')->with('message', $artist_display_name . ' was deleted.');
 		} else {

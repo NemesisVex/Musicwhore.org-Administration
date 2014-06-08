@@ -39,7 +39,7 @@ class Album extends Eloquent {
 		return $this->hasMany('AlbumMeta', 'meta_album_id', 'album_id');
 	}
 
-//	public function format() {
-//		return $this->hasOne('AlbumFormat', 'album_format_id', 'format_id');
-//	}
+	public function format() {
+		return $this->hasOne('AlbumFormat', 'format_id', 'album_format_id');
+	}
 }

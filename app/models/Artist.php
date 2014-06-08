@@ -50,4 +50,9 @@ class Artist extends Eloquent {
 			return $this->attributes['artist_display_name'];
 		}
 	}
+
+	public function getAllByInitialLetter() {
+		$artist_list = DB::table($this->table)->select(DB::raw('Upper(Substring(artist_last_name From 1 For 1)) as nav'))->groupBy('nav')->orderBy('nav')->get();
+		return $artist_list;
+	}
 }

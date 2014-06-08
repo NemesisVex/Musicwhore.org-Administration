@@ -16,8 +16,12 @@ Route::group(array('before' => 'auth'), function () {
 
 	// Artist
 	Route::model('artist', 'Artist');
-	Route::resource('artist', 'ArtistController');
 	Route::get( '/artist/{artist}/delete', array( 'as' => 'artist.delete', 'before' => 'auth', 'uses' => 'ArtistController@delete' ) );
+	Route::resource('artist', 'ArtistController');
+
+	// ArtistMeta
+	Route::model('artist-meta', 'ArtistMeta');
+	Route::resource('artist-setting', 'ArtistMetaController');
 
 	// Album
 	Route::model('album', 'Album');

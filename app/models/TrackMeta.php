@@ -6,18 +6,12 @@
  * Time: 10:09 AM
  */
 
-class TrackMeta extends Eloquent {
+class TrackMeta extends BaseMeta {
 
 	protected $table = 'mw_albums_tracks_meta';
-	protected $primaryKey = 'meta_id';
-	protected $softDelete = true;
-	protected $fillable = array(
-		'meta_track_id',
-		'meta_field_name',
-		'meta_field_value',
-	);
-	protected $guarded = array(
-		'meta_id',
-	);
+
+	public function __construct() {
+		$this->fillable[] = 'meta_track_id';
+	}
 
 }
