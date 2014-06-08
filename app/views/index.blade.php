@@ -4,7 +4,7 @@
  &raquo; Administration
 @stop
 
-@section('section_head')
+@section('section_header')
 <h2>Home</h2>
 @stop
 

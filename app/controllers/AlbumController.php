@@ -131,7 +131,7 @@ class AlbumController extends \BaseController {
 	public function edit($id)
 	{
 		$releases = $id->releases->lists('release_catalog_num', 'release_id');
-		$artists = Artist::orderBy('artist_last_name')->lists('artist_display_name', 'artist_id');
+		$artists = Artist::with('meta')->select(array('artist_id', 'artist_last_name', 'artist_first_name', 'artist_display_name'))->orderBy('artist_last_name')->get()->lists('artist_display_name', 'artist_id');
 
 		$method_variables = array(
 			'album' => $id,

@@ -17,7 +17,7 @@ class MetaCollection extends \Illuminate\Database\Eloquent\Collection {
 			if ($meta->meta_field_name == $name) {
 				return $meta;
 			}
-		})->first();
+		});
 	}
 
 	public function setMeta($name, $value) {
@@ -60,7 +60,11 @@ class MetaCollection extends \Illuminate\Database\Eloquent\Collection {
 
 	public function __get($name) {
 		$meta = $this->getMeta($name);
-		return (!empty($meta->meta_field_value)) ? $meta->meta_field_value : null;
+		if ($meta->count() > 1) {
+			return $meta;
+		} else {
+			return (!empty($meta->first()->meta_field_value)) ? $meta->first()->meta_field_value : null;
+		}
 	}
 
 	public function __set($name, $value) {

@@ -160,6 +160,6 @@
 </div>
 
 <div class="col-sm-offset-3 col-sm-9">
-	{{ Form::submit( 'Save', array( 'class' => 'button' ) ) }}
+	{{ Form::submit( 'Save', array( 'class' => 'btn btn-default' ) ) }}
 </div>
 @stop

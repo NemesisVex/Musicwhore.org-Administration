@@ -8,7 +8,7 @@
 
 class Track extends Eloquent {
 
-	protected $table = 'mw_albums_releases_tracks';
+	protected $table = 'mw_albums_tracks';
 	protected $primaryKey = 'track_id';
 	protected $softDelete = true;
 	protected $fillable = array(

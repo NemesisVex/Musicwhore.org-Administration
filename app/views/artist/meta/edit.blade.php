@@ -5,7 +5,7 @@
 &raquo; Edit Settings
 @stop
 
-@section('section_head')
+@section('section_header')
 <h2>{{ $artist->artist_display_name }}</h2>
 @stop
 

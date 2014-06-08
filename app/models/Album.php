@@ -13,18 +13,16 @@ class Album extends Eloquent {
 	protected $softDelete = true;
 	protected $fillable = array(
 		'album_artist_id',
-		'album_primary_release_id',
 		'album_format_id',
-		'album_ctype_locale',
 		'album_title',
-		'album_alias',
-		'album_image',
-		'album_music_description',
+		'album_sort_title',
+		'album_alt_title',
+		'album_label',
 		'album_release_date',
-		'album_is_visible',
+		'album_image',
 	);
 	protected $guarded = array(
-		'artist_id',
+		'album_id',
 	);
 
 	public function artist() {

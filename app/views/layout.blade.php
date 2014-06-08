@@ -63,7 +63,7 @@
 
 		<div class="row">
 			<div class="col-md-12">
-				@yield('section_head')
+				@yield('section_header')
 
 				@yield('section_label')
 

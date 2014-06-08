@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('section_head')
+@section('section_header')
 <h2>Login</h2>
 @stop
 

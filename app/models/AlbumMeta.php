@@ -9,6 +9,7 @@
 class AlbumMeta extends BaseMeta {
 
 	protected $table = 'mw_albums_meta';
+	protected $foreignMetaKey = 'meta_album_id';
 
 	public function __construct() {
 		$this->fillable[] = 'meta_album_id';

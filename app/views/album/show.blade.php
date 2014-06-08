@@ -19,117 +19,187 @@
 @stop
 
 @section('content')
+<div class="col-md-12">
+	<ul class="list-inline">
+		<li><a href="{{ route('album.edit', array('id' => $album->album_id)) }}" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Edit</a></li>
+		<li><a href="{{ route('album.delete', array('id' => $album->album_id)) }}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Delete</a></li>
+	</ul>
 
-<ul class="list-inline">
-	<li><a href="{{ route('album.edit', array('id' => $album->album_id)) }}" class="button">Edit</a></li>
-	<li><a href="{{ route('album.delete', array('id' => $album->album_id)) }}" class="button">Delete</a></li>
-</ul>
-
-<ul class="two-column-bubble-list">
-	<li>
-		<div>
-			<label>Title</label> {{ $album->album_title }}
-		</div>
-	</li>
-	@if (!empty($album->album_ctype_locale))
-	<li>
-		<div>
-			<label>Title locale</label> {{ $album->album_ctype_locale }}
-		</div>
-	</li>
-	@endif
-	@if (!empty($album->album_release_date))
-	<li>
-		<div>
-			<label>Release Date</label> {{ date( 'm/d/Y', strtotime( $album->album_release_date ) ) }}
-		</div>
-	</li>
-	@endif
-	@if (!empty($album->album_alias))
-	<li>
-		<div>
-			<label>Alias</label> {{ $album->album_alias }}
-		</div>
-	</li>
-	@endif
-	@if (!empty($album->album_image))
-	<li>
-		<div>
-			<label>Image</label> {{ $album->album_image }}
-		</div>
-	</li>
-	@endif
-	@if (!empty($primary_release))
-	<li>
-		<div>
-			<label>Primary release</label> {{ $primary_release->release_catalog_num }}
-		</div>
-	</li>
-	@endif
-	<li>
-		<div>
-			<label>Visible?</label> <input type="checkbox" disabled="disabled" value="1"
-			@if ($album->album_is_visible==true)
-			checked="checked"
-			@endif />
-		</div>
-	</li>
-</ul>
-
-
-<h3>Releases</h3>
-
-<ul class="list-inline">
-	<li><a href="{{ route('release.create', array( 'album' => $album->album_id )) }}" class="button"><span class="glyphicon glyphicon-plus"></span> Add a release</a></li>
-</ul>
-
-@if (count($album->releases) > 0)
-<table class="table">
-	<thead>
-	<tr>
-		<th>&nbsp;</th>
-		<th>Cover</th>
-		<th>Catalog No.</th>
-		<th>UPC</th>
-	</tr>
-	</thead>
-	<tbody>
-	</tbody>
-	@foreach ($album->releases as $release)
-	<tr>
-		<td>
-			<div>
-				<ul class="list-inline">
-					<li><a href="{{ route( 'release.edit', array( 'id' => $release->release_id ) ) }}/"><span class="glyphicon glyphicon-pencil" title="[Edit]"></span> <span class="sr-only">Edit</span></a></li>
-					<li><a href="{{ route( 'release.delete', array( 'id' => $release->release_id ) ) }}/"><span class="glyphicon glyphicon-remove" title="[Delete]"></span> <span class="sr-only">Delete</span></a></li>
-				</ul>
+	<ul class="list-unstyled">
+		<li class="row">
+			<label class="col-md-3">Title</label>
+			<div class="col-md-9">
+				{{ $album->album_title }}
 			</div>
-		</td>
-		<td>
-			<a href="{{ route( 'release.show', array( 'id' => $release->release_id ) ) }}"><img src="{{ OBSERVANTRECORDS_CDN_BASE_URI }}/artists/{{ $release->album->artist->artist_alias }}/albums/{{ $release->album->album_alias }}/{{ strtolower($release->release_catalog_num) }}/images/cover_front_small.jpg" width="50" height="50" /></a>
-		</td>
-		<td>
-			@if (!empty($release->release_catalog_num))
-			{{ $release->release_catalog_num }}
-			@else
-			Unassigned
-			@endif
-		</td>
-		<td>
-			@if (!empty($release->release_upc_num))
-			{{ $release->release_upc_num }}
-			@else
-			Unassigned
-			@endif
-		</td>
-	</tr>
-	@endforeach
-</table>
-@else
-<p>
-	This album has no releases. Please add one.
-</p>
-@endif
+		</li>
+		@if (!empty($album->format->format_alias))
+		<li class="row">
+			<label class="col-md-3">Format</label>
+			<div class="col-md-9">
+				{{ $album->format->format_alias }}
+			</div>
+		</li>
+		@endif
+		@if (!empty($album->album_sort_title))
+		<li class="row">
+			<label class="col-md-3">Sort title</label>
+			<div class="col-md-9">
+				{{ $album->album_sort_title }}
+			</div>
+		</li>
+		@endif
+		@if (!empty($album->album_alt_title))
+		<li class="row">
+			<label class="col-md-3">Alternate title</label>
+			<div class="col-md-9">
+				{{ $album->album_alt_title }}
+			</div>
+		</li>
+		@endif
+		@if (!empty($album->album_label))
+		<li class="row">
+			<label class="col-md-3">Label</label>
+			<div class="col-md-9">
+				{{ $album->album_label }}
+			</div>
+		</li>
+		@endif
+		@if (!empty($album->album_release_date))
+		<li class="row">
+			<label class="col-md-3">Release date</label>
+			<div class="col-md-9">
+				{{ date('Y-m-d', strtotime( $album->album_release_date )) }}
+			</div>
+		</li>
+		@endif
+		@if (!empty($album->album_image))
+		<li class="row">
+			<label class="col-md-3">Image</label>
+			<div class="col-md-9">
+				{{ $album->album_image }}
+			</div>
+		</li>
+		@endif
+	</ul>
 
+	<h3>Settings</h3>
+
+	<ul class="list-inline">
+		<li><a href="{{ route('album-setting.edit', array('id' => $album->album_id)) }}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Edit</a></li>
+	</ul>
+
+	<h4>External services</h4>
+
+	<ul class="list-unstyled">
+		<li class="row">
+			<label class="col-md-3">Musicbrainz GID</label>
+			<div class="col-md-9">
+				@if ($album->meta->musicbrainz_gid !== null)
+				{{ $album->meta->musicbrainz_gid }}
+				@else
+				Not set.
+				@endif
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">Discogs ID</label>
+			<div class="col-md-9">
+				@if ($album->meta->discogs_master_release_id !== null)
+				{{ $album->meta->discogs_master_release_id }}
+				@else
+				Not set
+				@endif
+			</div>
+		</li>
+	</ul>
+
+	<h4>Classical</h4>
+
+	<ul class="list-unstyled">
+		<li class="row">
+			<label class="col-md-3">Ensemble</label>
+			<div class="col-md-9">
+				@if ($album->meta->ensemble_id > 0)
+				{{ Artist::find( $album->meta->ensemble_id )->artist_display_name }}
+				@else
+				Not set
+				@endif
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">Soloist</label>
+			<div class="col-md-9">
+				@if ($album->meta->soloist_id > 0)
+				{{ Artist::find( $album->meta->soloist_id )->artist_display_name }}
+				@else
+				Not set
+				@endif
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">Conductor</label>
+			<div class="col-md-9">
+				@if ($album->meta->conductor_id > 0)
+				{{ Artist::find( $album->meta->conductor_id )->artist_display_name }}
+				@else
+				Not set
+				@endif
+			</div>
+		</li>
+	</ul>
+
+
+	<h3>Releases</h3>
+
+	<ul class="list-inline">
+		<li><a href="{{ route('release.create', array( 'album' => $album->album_id )) }}" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add a release</a></li>
+	</ul>
+
+	@if (count($album->releases) > 0)
+	<table class="table">
+		<thead>
+		<tr>
+			<th>&nbsp;</th>
+			<th>Catalog No.</th>
+			<th>UPC</th>
+		</tr>
+		</thead>
+		<tbody>
+		</tbody>
+		@foreach ($album->releases as $release)
+		<tr>
+			<td>
+				<div>
+					<ul class="list-inline">
+						<li><a href="{{ route( 'release.edit', array( 'id' => $release->release_id ) ) }}/"><span class="glyphicon glyphicon-pencil" title="[Edit]"></span> <span class="sr-only">Edit</span></a></li>
+						<li><a href="{{ route( 'release.delete', array( 'id' => $release->release_id ) ) }}/"><span class="glyphicon glyphicon-remove" title="[Delete]"></span> <span class="sr-only">Delete</span></a></li>
+					</ul>
+				</div>
+			</td>
+			<td>
+				<a href="{{ route( 'release.show', array( 'id' => $release->release_id ) ) }}">
+					@if (!empty($release->release_catalog_num))
+					{{ $release->release_catalog_num }}
+					@else
+					Unassigned
+					@endif
+				</a>
+			</td>
+			<td>
+				@if (!empty($release->release_upc_num))
+				{{ $release->release_upc_num }}
+				@else
+				Unassigned
+				@endif
+			</td>
+		</tr>
+		@endforeach
+	</table>
+	@else
+	<p>
+		This album has no releases. Please add one.
+	</p>
+	@endif
+</div>
 
 @stop

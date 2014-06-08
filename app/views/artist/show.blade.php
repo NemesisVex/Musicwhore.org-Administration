@@ -4,7 +4,7 @@
  &raquo; {{ $artist->artist_display_name }}
 @stop
 
-@section('section_head')
+@section('section_header')
 <h2>{{ $artist->artist_display_name }}</h2>
 @stop
 
@@ -15,8 +15,8 @@
 @section('content')
 <div class="col-md-12">
 	<ul class="list-inline">
-		<li><a href="{{ route('artist.edit', array('id' => $artist->artist_id)) }}" class="button"><span class="glyphicon glyphicon-pencil"></span> Edit</a></li>
-		<li><a href="{{ route('artist.delete', array('id' => $artist->artist_id)) }}" class="button"><span class="glyphicon glyphicon-remove"></span> Delete</a></li>
+		<li><a href="{{ route('artist.edit', array('id' => $artist->artist_id)) }}" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span> Edit</a></li>
+		<li><a href="{{ route('artist.delete', array('id' => $artist->artist_id)) }}" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Delete</a></li>
 	</ul>
 
 	<ul class="list-unstyled">
@@ -53,7 +53,7 @@
 	<h3>Settings</h3>
 
 	<ul class="list-inline">
-		<li><a href="{{ route('artist-setting.edit', array('artist' => $artist->artist_id)) }}" class="button"><span class="glyphicon glyphicon-pencil"></span> Edit</a></li>
+		<li><a href="{{ route('artist-setting.edit', array('artist' => $artist->artist_id)) }}" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span> Edit</a></li>
 	</ul>
 
 	<ul class="list-unstyled">
@@ -150,7 +150,7 @@
 	<h3>Albums</h3>
 
 	<ul class="list-inline">
-		<li><a href="{{ route( 'album.create', array( 'artist' => $artist->artist_id ) ) }}" class="button"><span class="glyphicon glyphicon-plus"></span> Add album</a></li>
+		<li><a href="{{ route( 'album.create', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add album</a></li>
 	</ul>
 
 	@if ($artist->albums->count() > 0)
@@ -169,8 +169,8 @@
 		<tr>
 			<td>
 				<ul class="list-inline">
-					<li><a href="{{ route( 'album.edit', array( 'id' => $album->album_id ) ) }}"><span class="glyphicon glyphicon-pencil"></span> <span class="sr-only">Edit</span></a></li>
-					<li><a href="{{ route( 'album.delete', array( 'id' => $album->album_id ) ) }}"><span class="glyphicon glyphicon-remove"></span> <span class="sr-only">Delete</span></a></li>
+					<li><a href="{{ route( 'album.edit', array( 'id' => $album->album_id ) ) }}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span> <span class="sr-only">Edit</span></a></li>
+					<li><a href="{{ route( 'album.delete', array( 'id' => $album->album_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span> <span class="sr-only">Delete</span></a></li>
 				</ul>
 			</td>
 			<td><a href="{{ route( 'album.show', array( 'id' => $album->album_id ) ) }}">{{ $album->album_title }}</a></td>

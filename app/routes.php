@@ -25,9 +25,12 @@ Route::group(array('before' => 'auth'), function () {
 
 	// Album
 	Route::model('album', 'Album');
-	Route::resource('album', 'AlbumController');
 	Route::get( '/album/{album}/delete', array( 'as' => 'album.delete', 'before' => 'auth', 'uses' => 'AlbumController@delete' ) );
-	Route::post( '/album/save-order', array( 'as' => 'album.save-order', 'before' => 'auth|csrf', 'uses' => 'AlbumController@save_order' ) );
+	Route::resource('album', 'AlbumController');
+
+	// AlbumMeta
+	Route::model('album-meta', 'AlbumMeta');
+	Route::resource('album-setting', 'AlbumMetaController');
 
 	// Release
 	Route::model('release', 'Release');

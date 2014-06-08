@@ -42,7 +42,7 @@ class Artist extends Eloquent {
 			if (empty($this->attributes['artist_first_name'])) {
 				return $this->attributes['artist_last_name'];
 			} else {
-				return ($this->attributes['artist_settings_mask'] & 2 == 2) ?
+				return ($this->meta->is_asian_name === true) ?
 					$this->attributes['artist_last_name'] . ' ' . $this->attributes['artist_first_name'] :
 					$this->attributes['artist_first_name'] . ' ' . $this->attributes['artist_last_name'];
 			}
