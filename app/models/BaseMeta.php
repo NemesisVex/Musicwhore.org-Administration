@@ -9,6 +9,7 @@
 class BaseMeta extends Eloquent {
 
 	protected $primaryKey = 'meta_id';
+	protected $foreignMetaKey;
 	protected $softDelete = true;
 	protected $fillable = array(
 		'meta_field_name',
@@ -29,5 +30,9 @@ class BaseMeta extends Eloquent {
 		return array(
 			$this->meta_field_name => $this->meta_field_value,
 		);
+	}
+
+	public function getForeignMetaKey() {
+		return $this->foreignMetaKey;
 	}
 }

@@ -92,7 +92,9 @@ class ArtistMetaController extends \BaseController {
 		$fields = Input::all();
 
 		foreach ($fields as $field => $value) {
-			$meta->{$field} = $value;
+			if ($field != '_method' && $field != '_token') {
+				$meta->{$field} = $value;
+			}
 		}
 
 		$result = $meta->save();

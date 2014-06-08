@@ -21,23 +21,40 @@ class MetaCollection extends \Illuminate\Database\Eloquent\Collection {
 	}
 
 	public function setMeta($name, $value) {
+		// If the property is not in the collection, a flag will let us know.
+		$is_updated = false;
+
 		foreach ($this->items as $i => $item) {
 			if ($item->meta_field_name == $name) {
 				$this->items[$i]->meta_field_value = $value;
+				$is_updated = true;
 			}
+		}
+
+		// If no update occurred, we need to create the setting.
+		if ($is_updated === false) {
+			$meta_class = get_class($this->items[0]);
+			$new_item = new $meta_class;
+			$foreign_meta_key = $new_item->getForeignMetaKey();
+
+			$new_item->{$foreign_meta_key} = $this->items[0]->{$foreign_meta_key};
+			$new_item->meta_field_name = $name;
+			$new_item->meta_field_value = $value;
+
+			$this->add($new_item);
 		}
 	}
 
 	public function save() {
 		$is_success = true;
-		$this->each(function ($meta) use (&$is_success) {
-			$result = $meta->save();
+		foreach ($this->items as $item) {
+			$result = $item->save();
 
 			// All settings must save successfully, so we change the flag on the first failure.
 			if ($result === false) {
 				$is_success = false;
 			}
-		});
+		}
 		return $is_success;
 	}
 
