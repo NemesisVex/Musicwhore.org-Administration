@@ -13,15 +13,14 @@ class Release extends Eloquent {
 	protected $softDelete = true;
 	protected $fillable = array(
 		'release_album_id',
-		'release_upc_num',
+		'release_ean_num',
 		'release_catalog_num',
 		'release_format_id',
-		'release_alternate_title',
-		'release_alias',
+		'release_alt_title',
+		'release_country_name',
 		'release_label',
 		'release_release_date',
 		'release_image',
-		'release_is_visible',
 	);
 	protected $guarded = array(
 		'release_id',

@@ -113,6 +113,7 @@
 		</li>
 	</ul>
 
+	@if ($album->artist->meta->is_classical_artist == true)
 	<h4>Classical</h4>
 
 	<ul class="list-unstyled">
@@ -147,7 +148,7 @@
 			</div>
 		</li>
 	</ul>
-
+	@endif
 
 	<h3>Releases</h3>
 
@@ -171,8 +172,8 @@
 			<td>
 				<div>
 					<ul class="list-inline">
-						<li><a href="{{ route( 'release.edit', array( 'id' => $release->release_id ) ) }}/"><span class="glyphicon glyphicon-pencil" title="[Edit]"></span> <span class="sr-only">Edit</span></a></li>
-						<li><a href="{{ route( 'release.delete', array( 'id' => $release->release_id ) ) }}/"><span class="glyphicon glyphicon-remove" title="[Delete]"></span> <span class="sr-only">Delete</span></a></li>
+						<li><a href="{{ route( 'release.edit', array( 'id' => $release->release_id ) ) }}/" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil" title="[Edit]"></span> <span class="sr-only">Edit</span></a></li>
+						<li><a href="{{ route( 'release.delete', array( 'id' => $release->release_id ) ) }}/" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove" title="[Delete]"></span> <span class="sr-only">Delete</span></a></li>
 					</ul>
 				</div>
 			</td>

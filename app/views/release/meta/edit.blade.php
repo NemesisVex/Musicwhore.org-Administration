@@ -1,9 +1,11 @@
-@extends('release._form')
+@extends('release.meta._form')
 
 @section('page_title')
  &raquo; {{ $release->album->artist->artist_display_name }}
  &raquo; {{ $release->album->album_title }}
+@if (!empty($release->release_catalog_num))
  &raquo; {{ $release->release_catalog_num }}
+@endif
  &raquo; Edit
 @stop
 
@@ -18,7 +20,7 @@
 
 @section('section_label')
 <h3>
-	Edit release
+	Edit release settings
 	@if (!empty($release->release_catalog_num))
 	<small>{{ $release->release_catalog_num }}</small>
 	@endif
@@ -27,7 +29,7 @@
 
 @section('content')
 <div class="col-md-12">
-	{{ Form::model( $release, array( 'route' => array('release.update', $release->release_id), 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'put' ) ) }}
+	{{ Form::model( $release, array( 'route' => array('release-setting.update', $release->release_id), 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'put' ) ) }}
 	@parent
 	{{ Form::close() }}
 </div>

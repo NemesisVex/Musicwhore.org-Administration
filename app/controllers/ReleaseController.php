@@ -132,12 +132,19 @@ class ReleaseController extends \BaseController {
 	public function edit($id)
 	{
 		$albums = Album::where('album_artist_id', $id->album->album_artist_id)->orderBy('album_title')->lists('album_title', 'album_id');
+		$albums = array('0' => '&nbsp;') + $albums;
+
 		$formats = ReleaseFormat::lists('format_alias', 'format_id');
+		$formats = array('0' => '&nbsp;') + $formats;
+
+		$countries = Country::orderBy('country_name')->lists('country_name', 'country_name');
+		$countries = array('0' => '&nbsp;') + $countries;
 
 		$method_variables = array(
 			'release' => $id,
 			'albums' => $albums,
 			'formats' => $formats,
+			'countries' => $countries,
 		);
 
 		$data = array_merge($method_variables, $this->layout_variables);

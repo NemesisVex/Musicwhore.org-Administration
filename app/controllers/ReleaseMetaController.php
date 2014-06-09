@@ -1,6 +1,6 @@
 <?php
 
-class AlbumMetaController extends \BaseController {
+class ReleaseMetaController extends \BaseController {
 
 	private $layout_variables = array();
 
@@ -69,18 +69,15 @@ class AlbumMetaController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$album = Album::find($id);
-		$artists = Artist::whereHas('meta', function ($query) { $query->where('meta_field_name', 'is_classical_artist')->where('meta_field_value', 1); })->orderBy('artist_last_name')->get()->lists('artist_display_name', 'artist_id');
-		$artists = array(0 => '&nbsp;') + $artists;
+		$release = Release::find($id);
 
 		$method_variables = array(
-			'album' => $album,
-			'artists' => $artists,
+			'release' => $release,
 		);
 
 		$data = array_merge($method_variables, $this->layout_variables);
 
-		return View::make('album.meta.edit', $data);
+		return View::make('release.meta.edit', $data);
 	}
 
 
@@ -92,7 +89,7 @@ class AlbumMetaController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$meta = AlbumMeta::where('meta_album_id', $id)->get();
+		$meta = ReleaseMeta::where('meta_release_id', $id)->get();
 
 		$fields = Input::all();
 
@@ -105,9 +102,9 @@ class AlbumMetaController extends \BaseController {
 		$result = $meta->save();
 
 		if ($result !== false) {
-			return Redirect::route('album.show', array('id' => $id))->with('message', 'Your changes were saved.');
+			return Redirect::route('release.show', array('id' => $id))->with('message', 'Your changes were saved.');
 		} else {
-			return Redirect::route('album.show', array('id' => $id))->with('error', 'Your changes were not saved.');
+			return Redirect::route('release.show', array('id' => $id))->with('error', 'Your changes were not saved.');
 		}
 	}
 

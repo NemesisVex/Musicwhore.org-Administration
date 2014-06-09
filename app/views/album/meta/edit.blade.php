@@ -20,7 +20,9 @@
 @stop
 
 @section('content')
-{{ Form::model( $album, array( 'route' => array('album-setting.update', $album->album_id), 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'put' ) ) }}
-@parent
-{{ Form::close() }}
+<div class="col-md-12">
+	{{ Form::model( $album, array( 'route' => array('album-setting.update', $album->album_id), 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'put' ) ) }}
+	@parent
+	{{ Form::close() }}
+</div>
 @stop

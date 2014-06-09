@@ -26,16 +26,9 @@
 @stop
 
 @section('content')
-{{ Form::model( $release, array( 'route' => 'release.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post' ) ) }}
-@parent
-{{ Form::close() }}
-@stop
-
-
-@section('sidebar')
-@if (!empty($release->release_album_id))
-<ul>
-	<li><a href="{{ route('album.show', array( 'id' => $release->release_album_id )) }}/">Back to <em>{{ $release->album->album_title }}</em></a></li>
-</ul>
-@endif
+<div class="col-md-12">
+	{{ Form::model( $release, array( 'route' => 'release.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post' ) ) }}
+	@parent
+	{{ Form::close() }}
+</div>
 @stop

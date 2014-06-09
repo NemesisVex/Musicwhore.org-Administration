@@ -38,6 +38,10 @@ Route::group(array('before' => 'auth'), function () {
 	Route::get( '/release/{release}/delete', array( 'as' => 'release.delete', 'before' => 'auth', 'uses' => 'ReleaseController@delete' ) );
 	Route::get( '/release/{release}/export-id3', array( 'as' => 'release.export-id3', 'before' => 'auth', 'uses' => 'ReleaseController@export_id3' ) );
 
+	// ReleaseMeta
+	Route::model('release-meta', 'ReleaseMeta');
+	Route::resource('release-setting', 'ReleaseMetaController');
+
 	// Tracks
 	Route::model('track', 'Track');
 	Route::get( '/track/{track}/delete', array( 'as' => 'track.delete', 'before' => 'auth', 'uses' => 'TrackController@delete' ) );

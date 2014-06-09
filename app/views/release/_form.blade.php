@@ -17,13 +17,6 @@
 </div>
 
 <div class="form-group">
-	{{ Form::label( 'release_alias', 'Alias:', array( 'class' => 'col-sm-2 control-label' ) ) }}
-	<div class="col-sm-10">
-		{{ Form::text( 'release_alias', $release->release_alias, array( 'class' => 'form-control' ) ) }}
-	</div>
-</div>
-
-<div class="form-group">
 	{{ Form::label( 'release_label', 'Label:', array( 'class' => 'col-sm-2 control-label' ) ) }}
 	<div class="col-sm-10">
 		{{ Form::text( 'release_label', $release->release_label, array( 'class' => 'form-control' ) ) }}
@@ -38,9 +31,9 @@
 </div>
 
 <div class="form-group">
-	{{ Form::label( 'release_upc_num', 'UPC:', array( 'class' => 'col-sm-2 control-label' ) ) }}
+	{{ Form::label( 'release_ean_num', 'UPC/EAN:', array( 'class' => 'col-sm-2 control-label' ) ) }}
 	<div class="col-sm-10">
-		{{ Form::text( 'release_upc_num', $release->release_upc_num, array( 'class' => 'form-control' ) ) }}
+		{{ Form::text( 'release_ean_num', $release->release_ean_num, array( 'class' => 'form-control' ) ) }}
 	</div>
 </div>
 
@@ -59,25 +52,16 @@
 </div>
 
 <div class="form-group">
-	{{ Form::label( 'release_image', 'Image:', array( 'class' => 'col-sm-2 control-label' ) ) }}
+	{{ Form::label( 'release_country_name', 'Country:', array( 'class' => 'col-sm-2 control-label' ) ) }}
 	<div class="col-sm-10">
-		{{ Form::text( 'release_image', $release->release_image, array( 'class' => 'form-control' ) ) }}
+		{{ Form::select( 'release_country_name', $countries, $release->release_country_name, array( 'class' => 'form-control' ) ) }}
 	</div>
 </div>
 
 <div class="form-group">
-	{{ Form::label( 'release_is_visible', 'Visibility:', array( 'class' => 'col-sm-2 control-label' ) ) }}
+	{{ Form::label( 'release_image', 'Image:', array( 'class' => 'col-sm-2 control-label' ) ) }}
 	<div class="col-sm-10">
-		<div class="radio">
-			<label>
-				{{ Form::radio( 'release_is_visible', 1, ($release->release_is_visible == 1) ) }} Show
-			</label>
-		</div>
-		<div class="radio">
-			<label>
-				{{ Form::radio( 'release_is_visible', 0, ($release->release_is_visible == 0) ) }} Hide
-			</label>
-		</div>
+		{{ Form::text( 'release_image', $release->release_image, array( 'class' => 'form-control' ) ) }}
 	</div>
 </div>
 
@@ -92,6 +76,7 @@
 		$(function () {
 			$('#release_album_id').chosen();
 			$('#release_format_id').chosen();
+			$('#release_country_name').chosen();
 
 			// Date pickers.
 			$('#release_release_date').datepicker({
