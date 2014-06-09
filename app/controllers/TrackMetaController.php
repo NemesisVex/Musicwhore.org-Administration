@@ -93,9 +93,24 @@ class TrackMetaController extends \BaseController {
 
 		$fields = Input::all();
 
-		foreach ($fields as $field => $value) {
-			if ($field != '_method' && $field != '_token') {
-				$meta->{$field} = $value;
+		if ($meta->count() == 0) {
+			$meta_fields = array();
+			foreach ($fields as $field => $value) {
+				if ($field != '_method' && $field != '_token') {
+					$meta_field = new TrackMeta;
+					$meta_field->meta_track_id = $id;
+					$meta_field->meta_field_name = $field;
+					$meta_field->meta_field_value = $value;
+
+					$meta_fields[] = $meta_field;
+				}
+			}
+			$meta_field->newCollection($meta_fields);
+		} else {
+			foreach ($fields as $field => $value) {
+				if ($field != '_method' && $field != '_token') {
+					$meta->{$field} = $value;
+				}
 			}
 		}
 
