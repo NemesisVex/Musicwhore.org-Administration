@@ -12,16 +12,12 @@ class Track extends Eloquent {
 	protected $primaryKey = 'track_id';
 	protected $softDelete = true;
 	protected $fillable = array(
-		'track_song_id',
 		'track_release_id',
-		'track_recording_id',
 		'track_disc_num',
 		'track_track_num',
-		'track_alias',
-		'track_is_visible',
-		'track_audio_is_linked',
-		'track_audio_is_downloadable',
-		'track_uplaya_score',
+		'track_song_title',
+		'track_sort_title',
+		'track_alt_title',
 	);
 	protected $guarded = array(
 		'track_id',

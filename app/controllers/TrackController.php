@@ -145,17 +145,15 @@ class TrackController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$songs = $this->build_song_options($id);
-
-		$recordings = $this->build_recording_options($id);
-
 		$releases = $this->build_release_options($id);
+
+		$artists = Artist::orderBy('artist_last_name')->get()->lists('artist_display_name', 'artist_id');
+		$artists = array(0 => '&nbsp;') + $artists;
 
 		$method_variables = array(
 			'track' => $id,
-			'songs' => $songs,
-			'recordings' => $recordings,
 			'releases' => $releases,
+			'artists' => $artists,
 		);
 
 		$data = array_merge($method_variables, $this->layout_variables);
@@ -208,7 +206,7 @@ class TrackController extends \BaseController {
 	public function destroy($id)
 	{
 		$confirm = (boolean) Input::get('confirm');
-		$track_song_title = $id->song->song_title;
+		$track_song_title = $id->track_song_title;
 		$release_id = $id->track_release_id;
 
 		if ($confirm === true) {
@@ -247,37 +245,6 @@ class TrackController extends \BaseController {
 		$track->track_track_num = $input['track_track_num'];
 
 		return $track->save();
-	}
-
-	private function build_song_options($track) {
-
-		if (!empty($track->release->album->artist->artist_id)) {
-			$songs = Song::where('song_primary_artist_id', $track->release->album->artist->artist_id)->orderBy('song_title')->lists('song_title', 'song_id');
-		} else {
-			$songs = Song::orderBy('song_title')->lists('song_title', 'song_id');
-		}
-
-		$songs = array(0 => '&nbsp;') + $songs;
-		return $songs;
-	}
-
-	private function build_recording_options($track) {
-
-		if (!empty($track->release->album->artist->artist_id)) {
-			$recording_songs = Recording::with('song')->where('recording_artist_id', $track->release->album->artist->artist_id)->orderBy('recording_isrc_num')->get();
-		} else {
-			$recording_songs = Recording::with('song')->orderBy('recording_isrc_num')->get();
-		}
-
-		$recordings = $recording_songs->lists('recording_isrc_num', 'recording_id');
-		foreach ($recordings as $r => $recording) {
-			$recordings[$r] = empty($recording) ? 'ISRC no. not set' : $recording;
-			$song_title = !empty($recording_songs->find($r)->song->song_title) ? $recording_songs->find($r)->song->song_title : 'TBD';
-			$recordings[$r] .= ' (' . $song_title . ')';
-		}
-
-		$recordings = array(0 => '&nbsp;') + $recordings;
-		return $recordings;
 	}
 
 	private function build_release_options($track) {

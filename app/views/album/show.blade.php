@@ -187,8 +187,8 @@
 				</a>
 			</td>
 			<td>
-				@if (!empty($release->release_upc_num))
-				{{ $release->release_upc_num }}
+				@if (!empty($release->release_ean_num))
+				{{ $release->release_ean_num }}
 				@else
 				Unassigned
 				@endif

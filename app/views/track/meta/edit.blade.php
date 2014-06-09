@@ -1,11 +1,11 @@
-@extends('track._form')
+@extends('track.meta._form')
 
 @section('page_title')
- &raquo; {{ $track->release->album->artist->artist_display_name }}
- &raquo; {{ $track->release->album->album_title }}
+&raquo; {{ $track->release->album->artist->artist_display_name }}
+&raquo; {{ $track->release->album->album_title }}
 @if (!empty($release->release_catalog_num)) &raquo; {{ $release->release_catalog_num }} @endif
- &raquo; {{ $track->track_song_title }}
- &raquo; Edit
+&raquo; {{ $track->track_song_title }}
+&raquo; Edit settings
 @stop
 
 @section('section_header')
@@ -19,14 +19,14 @@
 
 @section('section_label')
 <h3>
-	Edit
+	Edit settings
 	<small>{{ $track->track_song_title }}</small>
 </h3>
 @stop
 
 @section('content')
 <div class="col-md-12">
-	{{ Form::model( $track, array( 'route' => array('track.update', $track->track_id), 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'put' ) ) }}
+	{{ Form::model( $track, array( 'route' => array('track-setting.update', $track->track_id), 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'put' ) ) }}
 	@parent
 	{{ Form::close() }}
 </div>

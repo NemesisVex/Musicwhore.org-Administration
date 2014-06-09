@@ -9,6 +9,7 @@
 class TrackMeta extends BaseMeta {
 
 	protected $table = 'mw_albums_tracks_meta';
+	protected $foreignMetaKey = 'meta_track_id';
 
 	public function __construct() {
 		$this->fillable[] = 'meta_track_id';

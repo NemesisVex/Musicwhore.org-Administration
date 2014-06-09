@@ -48,6 +48,10 @@ Route::group(array('before' => 'auth'), function () {
 	Route::post( '/track/save-order', array( 'as' => 'track.save-order', 'before' => 'auth|csrf', 'uses' => 'TrackController@save_order' ) );
 	Route::resource('track', 'TrackController');
 
+	// ReleaseMeta
+	Route::model('track-meta', 'TrackMeta');
+	Route::resource('track-setting', 'TrackMetaController');
+
 	// Audio
 	Route::model('audio', 'Audio');
 	Route::get( '/audio/{audio}/delete/', array( 'as' => 'audio.delete', 'before' => 'auth', 'uses' => 'AudioController@delete' ) );

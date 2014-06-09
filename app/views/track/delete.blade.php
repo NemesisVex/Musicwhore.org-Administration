@@ -4,7 +4,7 @@
  &raquo; {{ $track->release->album->artist->artist_display_name }}
  &raquo; {{ $track->release->album->album_title }}
 @if (!empty($release->release_catalog_num)) &raquo; {{ $release->release_catalog_num }} @endif
- &raquo; {{ $track->song->song_title }}
+ &raquo; {{ $track->track_song_title }}
  &raquo; Delete
 @stop
 
@@ -20,14 +20,14 @@
 @section('section_label')
 <h3>
 	Delete
-	<small>{{ $track->song->song_title }}</small>
+	<small>{{ $track->track_song_title }}</small>
 </h3>
 @stop
 
 @section('content')
 
 <p>
-	You are about to delete <strong>{{ $track->song->song_title }}</strong> from the database.
+	You are about to delete <strong>{{ $track->track_song_title }}</strong> from the database.
 </p>
 
 <p>
@@ -40,12 +40,12 @@
 	<div class="col-sm-12">
 		<div class="radio">
 			<label>
-				{{ Form::radio('confirm', '1') }} Yes, I want to delete {{ $track->song->song_title }}.
+				{{ Form::radio('confirm', '1') }} Yes, I want to delete {{ $track->track_song_title }}.
 			</label>
 		</div>
 		<div class="radio">
 			<label>
-				{{ Form::radio('confirm', '0') }} No, I don't want to delete {{ $track->song->song_title }}.
+				{{ Form::radio('confirm', '0') }} No, I don't want to delete {{ $track->track_song_title }}.
 			</label>
 		</div>
 	</div>
@@ -59,17 +59,4 @@
 
 {{ Form::close() }}
 
-@stop
-
-@section('sidebar')
-@if (!empty($track->release))
-<p>
-	<img src="{{ OBSERVANTRECORDS_CDN_BASE_URI }}/artists/{{ $track->release->album->artist->artist_alias }}/albums/{{ $track->release->album->album_alias }}/{{ strtolower($track->release->release_catalog_num) }}/images/cover_front_medium.jpg" width="230" />
-</p>
-
-<ul>
-	<li><a href="{{ route('track.show', array( 'id' => $track->track_id )) }}/">Back to <em>{{ $track->song->song_title }}</em></a></li>
-	<li><a href="{{ route('release.show', array( 'id' => $track->release->release_id )) }}/">Back to <em>{{ $track->release->album->album_title }}</em> @if (!empty($track->release->release_catalog_num)) ({{ $track->release->release_catalog_num }}) @else (TBD) @endif</a></li>
-</ul>
-@endif
 @stop

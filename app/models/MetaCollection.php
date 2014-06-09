@@ -63,6 +63,7 @@ class MetaCollection extends \Illuminate\Database\Eloquent\Collection {
 		if ($meta->count() > 1) {
 			return $meta;
 		} else {
+			echo intval(empty($meta->first()->meta_field_value)) . "\n";
 			return (!empty($meta->first()->meta_field_value)) ? $meta->first()->meta_field_value : null;
 		}
 	}

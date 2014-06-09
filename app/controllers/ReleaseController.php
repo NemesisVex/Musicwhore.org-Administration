@@ -61,13 +61,20 @@ class ReleaseController extends \BaseController {
 		} else {
 			$albums = Album::orderBy('album_title')->lists('album_title', 'album_id');
 		}
+		$albums = array('0' => '&nbsp;') + $albums;
 
 		$formats = ReleaseFormat::all()->lists('format_alias', 'format_id');
+		$formats = array('0' => '&nbsp;') + $formats;
+
+		$countries = Country::orderBy('country_name')->lists('country_name', 'country_name');
+		$countries = array('0' => '&nbsp;') + $countries;
+
 
 		$method_variables = array(
 			'release' => $release,
 			'albums' => $albums,
 			'formats' => $formats,
+			'countries' => $countries,
 		);
 
 		$data = array_merge($method_variables, $this->layout_variables);
@@ -222,35 +229,5 @@ class ReleaseController extends \BaseController {
 		} else {
 			return Redirect::route('release.show', array('id' => $id->release_id))->with('error', 'The record was not deleted.');
 		}
-	}
-
-	public function export_id3($id) {
-
-		$file_lines = array();
-		foreach ($id->tracks as $track) {
-			$tag = array(
-				$track->release->album->artist->artist_display_name,
-				$track->release->album->artist->artist_display_name,
-				$track->release->album->album_title,
-				date('Y', strtotime($track->release->release_release_date)),
-				'Other',
-				'℗ ' . date('Y', strtotime($track->release->release_release_date)) . ' Observant Records',
-				$track->recording->recording_isrc_num,
-				sprintf('%02d', $track->track_track_num),
-				$track->song->song_title,
-			);
-			$tag_line = implode('|', $tag);
-			$file_lines[] = $tag_line;
-		}
-		$file = implode("\r\n", $file_lines);
-
-		$file_with_bom = chr(239) . chr(187) . chr(191) . $file;
-
-		$file_name = $id->album->artist->artist_display_name . ' - ' . $id->album->album_title . '.m3u.txt';
-		header('Cache-Control: private');
-		header('Content-Disposition: attachment; filename="' . $file_name . '"');
-		header("Content-Type: text/plain; charset=utf-8");
-		echo $file_with_bom;
-		die();
 	}
 }
