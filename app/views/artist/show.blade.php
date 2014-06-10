@@ -50,6 +50,90 @@
 		</li>
 	</ul>
 
+	<h3>Members</h3>
+
+	{{ Form::open( array( 'route' => array( 'personnel.save-order' ), 'id' => 'save-order-form' ) ) }}
+	<ul class="list-inline">
+		<li><a href="{{ route( 'personnel.create', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add members</a></li>
+		@if ($artist->personnel->count() > 0)
+		<li>{{ Form::button( 'Save member order', array( 'id' => 'save-order', 'class' => 'btn btn-default' ) ) }}</li>
+		@endif
+	</ul>
+	{{ Form::close() }}
+
+	@if ($artist->personnel->count() > 0)
+	<ul class="list-unstyled member-list">
+		@foreach ($artist->personnel->sortBy('member_order') as $member)
+		<li>
+			<ul class="list-inline">
+				<li><a href="{{ route( 'personnel.edit', array( 'id' => $member->member_id ) ) }}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span> <span class="sr-only">Edit</span></a></li>
+				<li><a href="{{ route( 'personnel.delete', array( 'id' => $member->member_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span> <span class="sr-only">Delete</span></a></li>
+				<li>
+					<span class="member-order-display">{{ $member->member_order }}</span>. <a href="{{ route( 'personnel.show', array( 'id' => $member->member_id )) }}">{{ $member->member_display_name }}</a>@if (!empty($member->member_instruments)), {{$member->member_instruments}}@endif
+					<input type="hidden" name="member_id" value="{{ $member->member_id }}" />
+				</li>
+			</ul>
+		</li>
+		@endforeach
+	</ul>
+	@else
+	<p>
+		This artist has no personnel.
+	</p>
+	@endif
+
+	<div id="save-order-dialog">
+		<p class="msg"></p>
+	</div>
+
+	<script type="text/javascript">
+		$('.member-list').sortable({
+			update: function (event, ui) {
+				var new_order_num = 1;
+				$(this).children().each(function () {
+					$(this).find('.member-order-display').html(new_order_num);
+					new_order_num++;
+				});
+			}
+		});
+
+		$('#save-order-dialog').dialog({
+			autoOpen: false,
+			modal: true,
+			buttons: {
+				"OK": function () {
+					$(this).dialog('close');
+				}
+			}
+		});
+		$('#save-order').click(function () {
+			var members = [], member_order, member_id;
+			$('.member-list').children().each(function () {
+				member_order = $(this).find('.member-order-display').html();
+				member_id = $(this).find('input[name=member_id]').val();
+				member_info = {
+					'member_id': member_id,
+					'member_order': member_order,
+				}
+				members.push(member_info);
+			});
+			var _token = $('#save-order-form').find('input[name=_token]').val();
+			var url = $('#save-order-form').attr('action');
+			var data = {
+				'members': members,
+				'_token': _token
+			};
+			$.post(url, data, function (result) {
+				$('#save-order-dialog').dialog('open');
+				$('#save-order-dialog').find('.msg').html(result);
+			}).error(function (result) {
+				var error_msg = 'Your request could not be completed. The following error was given: ' + result.statusText;
+				$('#save-order-dialog').dialog('open');
+				$('#save-order-dialog').find('.msg').html(error_msg);
+			});
+		});
+	</script>
+
 	<h3>Settings</h3>
 
 	<ul class="list-inline">

@@ -222,6 +222,9 @@ class ArtistController extends \BaseController {
 			// Remove artist settings.
 			$id->meta()->delete();
 
+			// Remove personnel.
+			$id->personnel()->delete();
+
 			// Remove artist.
 			$artist_id = $id->artist_id;
 			$id->delete();

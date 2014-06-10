@@ -23,6 +23,12 @@ Route::group(array('before' => 'auth'), function () {
 	Route::model('artist-meta', 'ArtistMeta');
 	Route::resource('artist-setting', 'ArtistMetaController');
 
+	// Personnel
+	Route::model('personnel', 'Personnel');
+	Route::get( '/personnel/{personnel}/delete', array( 'as' => 'personnel.delete', 'before' => 'auth', 'uses' => 'PersonnelController@delete' ) );
+	Route::post( '/personnel/save-order', array( 'as' => 'personnel.save-order', 'before' => 'auth|csrf', 'uses' => 'PersonnelController@save_order' ) );
+	Route::resource('personnel', 'PersonnelController');
+
 	// Album
 	Route::model('album', 'Album');
 	Route::get( '/album/{album}/delete', array( 'as' => 'album.delete', 'before' => 'auth', 'uses' => 'AlbumController@delete' ) );
@@ -36,7 +42,6 @@ Route::group(array('before' => 'auth'), function () {
 	Route::model('release', 'Release');
 	Route::resource('release', 'ReleaseController');
 	Route::get( '/release/{release}/delete', array( 'as' => 'release.delete', 'before' => 'auth', 'uses' => 'ReleaseController@delete' ) );
-	Route::get( '/release/{release}/export-id3', array( 'as' => 'release.export-id3', 'before' => 'auth', 'uses' => 'ReleaseController@export_id3' ) );
 
 	// ReleaseMeta
 	Route::model('release-meta', 'ReleaseMeta');
@@ -51,17 +56,6 @@ Route::group(array('before' => 'auth'), function () {
 	// ReleaseMeta
 	Route::model('track-meta', 'TrackMeta');
 	Route::resource('track-setting', 'TrackMetaController');
-
-	// Audio
-	Route::model('audio', 'Audio');
-	Route::get( '/audio/{audio}/delete/', array( 'as' => 'audio.delete', 'before' => 'auth', 'uses' => 'AudioController@delete' ) );
-	Route::resource('audio', 'AudioController');
-
-	// Ecommerce
-	Route::model('ecommerce', 'Ecommerce');
-	Route::get( '/ecommerce/{ecommerce}/delete', array( 'as' => 'ecommerce.delete', 'before' => 'auth', 'uses' => 'EcommerceController@delete' ) );
-	Route::post( '/ecommerce/save-order', array( 'as' => 'ecommerce.save-order', 'before' => 'auth|csrf', 'uses' => 'EcommerceController@save_order' ) );
-	Route::resource('ecommerce', 'EcommerceController');
 });
 
 

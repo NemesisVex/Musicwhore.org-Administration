@@ -34,20 +34,20 @@ class Artist extends Eloquent {
 	}
 
 	public function personnel() {
-		return $this->hasMany('ArtistPersonnel', 'member_parent_id', 'artist_id');
+		return $this->hasMany('Personnel', 'member_parent_id', 'artist_id');
 	}
 
 	public function getArtistDisplayNameAttribute() {
 		if (empty($this->attributes['artist_display_name'])) {
 			if (empty($this->attributes['artist_first_name'])) {
-				return $this->attributes['artist_last_name'];
+				return !empty($this->attributes['artist_last_name']) ? $this->attributes['artist_last_name'] : null;
 			} else {
 				return ($this->meta->is_asian_name === true) ?
 					$this->attributes['artist_last_name'] . ' ' . $this->attributes['artist_first_name'] :
 					$this->attributes['artist_first_name'] . ' ' . $this->attributes['artist_last_name'];
 			}
 		} else {
-			return $this->attributes['artist_display_name'];
+			return !empty($this->attributes['artist_display_name']) ? $this->attributes['artist_display_name'] : null;
 		}
 	}
 

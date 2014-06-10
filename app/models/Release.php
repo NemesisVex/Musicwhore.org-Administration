@@ -44,8 +44,4 @@ class Release extends Eloquent {
 		return $this->hasMany('ReleaseMeta', 'meta_release_id', 'release_id');
 	}
 
-//	public function ecommerce() {
-//		return $this->hasMany('Ecommerce', 'ecommerce_release_id', 'release_id');
-//	}
-
-} 
+}

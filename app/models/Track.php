@@ -28,10 +28,6 @@ class Track extends Eloquent {
 		return $this->belongsTo('Release', 'track_release_id', 'release_id');
 	}
 
-//	public function ecommerce() {
-//		return $this->hasMany('Ecommerce', 'ecommerce_track_id', 'track_id');
-//	}
-
 	public function meta() {
 		return $this->hasMany('TrackMeta', 'meta_track_id', 'track_id');
 	}
