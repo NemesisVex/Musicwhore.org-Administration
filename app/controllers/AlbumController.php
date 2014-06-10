@@ -1,5 +1,11 @@
 <?php
 
+use \Guzzle\Http\Client;
+use \MusicBrainz\Filters\ReleaseGroupFilter;
+use \MusicBrainz\Filters\ReleaseFilter;
+use \MusicBrainz\HttpAdapters\GuzzleHttpAdapter;
+use \MusicBrainz\MusicBrainz;
+
 class AlbumController extends \BaseController {
 
 	private $layout_variables = array();
@@ -247,8 +253,16 @@ class AlbumController extends \BaseController {
 	}
 
 	public function lookup_musicbrainz($id) {
+
+		$brainz = new MusicBrainz( new GuzzleHttpAdapter( new Client() ) );
+
+		$release_groups = $brainz->search( new ReleaseGroupFilter( array(
+			'release' => $id->album_title,
+		) ) );
+
 		$method_variables = array(
 			'album' => $id,
+			'release_groups' => $release_groups,
 		);
 
 		$data = array_merge($method_variables, $this->layout_variables);

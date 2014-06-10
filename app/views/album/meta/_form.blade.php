@@ -9,7 +9,7 @@
 		{{ Form::text( 'musicbrainz_gid', $album->meta->musicbrainz_gid, array( 'class' => 'form-control' ) ) }}
 	</div>
 	<div class="col-sm-1">
-		<a href="{{ route( 'album.musicbrainz.lookup', array( 'id' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
+		<a href="{{ route( 'album.musicbrainz.lookup', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 	</div>
 </div>
 

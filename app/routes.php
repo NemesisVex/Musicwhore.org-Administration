@@ -34,7 +34,7 @@ Route::group(array('before' => 'auth'), function () {
 	Route::get( '/album/{album}/delete', array( 'as' => 'album.delete', 'uses' => 'AlbumController@delete' ) );
 	Route::get( '/album/musicbrainz/{album}/lookup', array( 'as' => 'album.musicbrainz.lookup', 'uses' => 'AlbumController@lookup_musicbrainz' ) );
 	Route::get( '/album/discogs/{album}/lookup', array( 'as' => 'album.discogs.lookup', 'uses' => 'AlbumController@lookup_discogs' ) );
-	Route::post( '/album/musicbrainz/{album}/search', array( 'as' => 'album.musicbrainz.serach', 'before' => 'csrf', 'uses' => 'AlbumController@lookup_musicbrainz' ) );
+	Route::post( '/album/musicbrainz/{album}/search', array( 'as' => 'album.musicbrainz.search', 'before' => 'csrf', 'uses' => 'AlbumController@lookup_musicbrainz' ) );
 	Route::post( '/album/discogs/{album}/serach', array( 'as' => 'album.discogs.search', 'before' => 'csrf', 'uses' => 'AlbumController@lookup_discogs' ) );
 	Route::resource('album', 'AlbumController');
 
