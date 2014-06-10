@@ -43,9 +43,32 @@ class ReleaseMetaController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store($id)
 	{
-		//
+		$fields = Input::all();
+
+		foreach ($fields as $field => $value) {
+			$meta_item = new ReleaseMeta;
+			if (($field != '_method' && $field != '_token') && !empty($value)) {
+				$meta_item->meta_release_id = $id;
+				$meta_item->meta_field_name = $field;
+				$meta_item->meta_field_value = $value;
+
+				$result = true;
+
+				$save_result = $meta_item->save();
+
+				if ($save_result === false) {
+					$result = false;
+				}
+			}
+		}
+
+		if ($result !== false) {
+			return Redirect::route('album.show', array('id' => $id))->with('message', 'Your changes were saved.');
+		} else {
+			return Redirect::route('album.show', array('id' => $id))->with('error', 'Your changes were not saved.');
+		}
 	}
 
 
@@ -90,6 +113,10 @@ class ReleaseMetaController extends \BaseController {
 	public function update($id)
 	{
 		$meta = ReleaseMeta::where('meta_release_id', $id)->get();
+
+		if ($meta->count() == 0) {
+			return $this->store($id);
+		}
 
 		$fields = Input::all();
 

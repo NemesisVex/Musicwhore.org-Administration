@@ -50,12 +50,6 @@ class MetaCollection extends \Illuminate\Database\Eloquent\Collection {
 
 		// If no update occurred, we need to create the setting.
 		if ($is_updated === false) {
-			echo '<pre>';
-			echo intval( empty($this->metaId) );
-			echo intval( empty($this->metaClassId) );
-			echo intval( empty($this->metaClassName) );
-			echo '</pre>';
-			die();
 			$new_item = new $this->metaClassName;
 
 			$new_item->{$this->metaClassId} = $this->metaId;

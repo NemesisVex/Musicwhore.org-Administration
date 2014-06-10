@@ -41,9 +41,32 @@ class ArtistMetaController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store($id)
 	{
-		//
+		$fields = Input::all();
+
+		$result = true;
+
+		foreach ($fields as $field => $value) {
+			$meta_item = new ArtistMeta;
+			if ($field != '_method' && $field != '_token') {
+				$meta_item->meta_artist_id = $id;
+				$meta_item->meta_field_name = $field;
+				$meta_item->meta_field_value = $value;
+
+				$save_result = $meta_item->save();
+
+				if ($save_result === false) {
+					$result = false;
+				}
+			}
+		}
+
+		if ($result !== false) {
+			return Redirect::route('artist.show', array('id' => $id))->with('message', 'Your changes were saved.');
+		} else {
+			return Redirect::route('artist.show', array('id' => $id))->with('error', 'Your changes were not saved.');
+		}
 	}
 
 
@@ -89,6 +112,10 @@ class ArtistMetaController extends \BaseController {
 	{
 		$meta = ArtistMeta::where('meta_artist_id', $id)->get();
 
+		if ($meta->count() == 0) {
+			return $this->store($id);
+		}
+
 		$fields = Input::all();
 
 		foreach ($fields as $field => $value) {
@@ -96,11 +123,6 @@ class ArtistMetaController extends \BaseController {
 				$meta->{$field} = $value;
 			}
 		}
-
-		echo '<pre>';
-		print_r($meta);
-		echo '</pre>';
-		die();
 
 		$result = $meta->save();
 

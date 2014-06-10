@@ -56,6 +56,7 @@ class TrackMetaController extends \BaseController {
 				$meta_item->meta_track_id = $id;
 				$meta_item->meta_field_name = $field;
 				$meta_item->meta_field_value = $value;
+
 				$save_result = $meta_item->save();
 
 				if ($save_result === false) {

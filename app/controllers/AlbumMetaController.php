@@ -48,20 +48,22 @@ class AlbumMetaController extends \BaseController {
 	{
 		$fields = Input::all();
 
-		$meta_fields = array();
-		foreach ($fields as $field => $value) {
-			if (($field != '_method' && $field != '_token') && !empty($value)) {
-				$meta_field = new AlbumMeta;
-				$meta_field->meta_field_name = $field;
-				$meta_field->meta_field_value = $value;
-				$meta_field->meta_album_id = $id;
+		$result = true;
 
-				$meta_fields[] = $meta_field;
+		foreach ($fields as $field => $value) {
+			$meta_item = new AlbumMeta;
+			if (($field != '_method' && $field != '_token') && !empty($value)) {
+				$meta_item->meta_album_id = $id;
+				$meta_item->meta_field_name = $field;
+				$meta_item->meta_field_value = $value;
+
+				$save_result = $meta_item->save();
+
+				if ($save_result === false) {
+					$result = false;
+				}
 			}
 		}
-		$meta = $meta_field->newCollection($meta_fields);
-
-		$result = $meta->save();
 
 		if ($result !== false) {
 			return Redirect::route('album.show', array('id' => $id))->with('message', 'Your changes were saved.');
@@ -117,8 +119,7 @@ class AlbumMetaController extends \BaseController {
 		$meta = AlbumMeta::where('meta_album_id', $id)->get();
 
 		if ($meta->count() == 0) {
-			$this->store($id);
-			die();
+			return $this->store($id);
 		}
 
 		$fields = Input::all();

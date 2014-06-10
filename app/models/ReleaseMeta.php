@@ -9,10 +9,12 @@
 class ReleaseMeta extends BaseMeta {
 
 	protected $table = 'mw_albums_releases_meta';
-	protected $foreignMetaKey = 'meta_release_id';
 
 	public function __construct() {
-		$this->fillable[] = 'meta_release_id';
+		parent::__construct('meta_release_id');
 	}
 
+	public function newCollection(array $models = Array()) {
+		return new ReleaseMetaCollection($models);
+	}
 }

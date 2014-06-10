@@ -14,4 +14,7 @@ class AlbumMeta extends BaseMeta {
 		parent::__construct('meta_album_id');
 	}
 
+	public function newCollection(array $models = Array()) {
+		return new AlbumMetaCollection($models);
+	}
 }
