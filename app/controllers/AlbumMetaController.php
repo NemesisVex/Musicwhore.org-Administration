@@ -41,11 +41,33 @@ class AlbumMetaController extends \BaseController {
 	/**
 	 * Store a newly created resource in storage.
 	 *
+	 * @param  int  $id ID of album to which the meta data is related
 	 * @return Response
 	 */
-	public function store()
+	public function store($id)
 	{
-		//
+		$fields = Input::all();
+
+		$meta_fields = array();
+		foreach ($fields as $field => $value) {
+			if (($field != '_method' && $field != '_token') && !empty($value)) {
+				$meta_field = new AlbumMeta;
+				$meta_field->meta_field_name = $field;
+				$meta_field->meta_field_value = $value;
+				$meta_field->meta_album_id = $id;
+
+				$meta_fields[] = $meta_field;
+			}
+		}
+		$meta = $meta_field->newCollection($meta_fields);
+
+		$result = $meta->save();
+
+		if ($result !== false) {
+			return Redirect::route('album.show', array('id' => $id))->with('message', 'Your changes were saved.');
+		} else {
+			return Redirect::route('album.show', array('id' => $id))->with('error', 'Your changes were not saved.');
+		}
 	}
 
 
@@ -93,6 +115,11 @@ class AlbumMetaController extends \BaseController {
 	public function update($id)
 	{
 		$meta = AlbumMeta::where('meta_album_id', $id)->get();
+
+		if ($meta->count() == 0) {
+			$this->store($id);
+			die();
+		}
 
 		$fields = Input::all();
 

@@ -22,6 +22,13 @@ class BaseMeta extends Eloquent {
 		'setting',
 	);
 
+	public function __construct($foreign_meta_key = null) {
+		if (!empty($foreign_meta_key)) {
+			$this->foreignMetaKey = $foreign_meta_key;
+			$this->fillable[] = $foreign_meta_key;
+		}
+	}
+
 	public function newCollection(array $models = Array()) {
 		return new MetaCollection($models);
 	}

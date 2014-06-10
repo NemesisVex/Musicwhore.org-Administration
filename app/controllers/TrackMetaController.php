@@ -43,9 +43,32 @@ class TrackMetaController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store($id)
 	{
-		//
+		$fields = Input::all();
+
+		$result = true;
+
+		foreach ($fields as $field => $value) {
+			$meta_item = new TrackMeta;
+
+			if ($field != '_method' && $field != '_token') {
+				$meta_item->meta_track_id = $id;
+				$meta_item->meta_field_name = $field;
+				$meta_item->meta_field_value = $value;
+				$save_result = $meta_item->save();
+
+				if ($save_result === false) {
+					$result = false;
+				}
+			}
+		}
+
+		if ($result !== false) {
+			return Redirect::route('track.show', array('id' => $id))->with('message', 'Your changes were saved.');
+		} else {
+			return Redirect::route('track.show', array('id' => $id))->with('error', 'Your changes were not saved.');
+		}
 	}
 
 
@@ -91,26 +114,15 @@ class TrackMetaController extends \BaseController {
 	{
 		$meta = TrackMeta::where('meta_track_id', $id)->get();
 
+		if ($meta->count() == 0) {
+			return $this->store($id);
+		}
+
 		$fields = Input::all();
 
-		if ($meta->count() == 0) {
-			$meta_fields = array();
-			foreach ($fields as $field => $value) {
-				if ($field != '_method' && $field != '_token') {
-					$meta_field = new TrackMeta;
-					$meta_field->meta_track_id = $id;
-					$meta_field->meta_field_name = $field;
-					$meta_field->meta_field_value = $value;
-
-					$meta_fields[] = $meta_field;
-				}
-			}
-			$meta_field->newCollection($meta_fields);
-		} else {
-			foreach ($fields as $field => $value) {
-				if ($field != '_method' && $field != '_token') {
-					$meta->{$field} = $value;
-				}
+		foreach ($fields as $field => $value) {
+			if ($field != '_method' && $field != '_token') {
+				$meta->{$field} = $value;
 			}
 		}
 

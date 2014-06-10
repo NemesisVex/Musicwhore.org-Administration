@@ -97,6 +97,11 @@ class ArtistMetaController extends \BaseController {
 			}
 		}
 
+		echo '<pre>';
+		print_r($meta);
+		echo '</pre>';
+		die();
+
 		$result = $meta->save();
 
 		if ($result !== false) {

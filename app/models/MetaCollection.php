@@ -6,10 +6,27 @@
  * Time: 9:21 AM
  */
 
+/**
+ * Class MetaCollection
+ *
+ * MetaCollection makes an Eloquent Collection behave like a Model.
+ * meta_field_name becomes the property of a "Meta Model", and its
+ * properties are dynamically loaded.
+ */
 class MetaCollection extends \Illuminate\Database\Eloquent\Collection {
 
-	public function __construct($models) {
+	public $metaClassId;
+	public $metaClassName;
+	public $metaId;
+
+	public function __construct(array $models = Array(), array $metaObject = array()) {
 		parent::__construct($models);
+
+		if (!empty($metaObject)) {
+			$this->metaClassName = $metaObject['metaClassName'];
+			$this->metaClassId = $metaObject['metaClassId'];
+			$this->metaId = $metaObject['metaId'];
+		}
 	}
 
 	public function getMeta($name) {
@@ -33,11 +50,15 @@ class MetaCollection extends \Illuminate\Database\Eloquent\Collection {
 
 		// If no update occurred, we need to create the setting.
 		if ($is_updated === false) {
-			$meta_class = get_class($this->items[0]);
-			$new_item = new $meta_class;
-			$foreign_meta_key = $new_item->getForeignMetaKey();
+			echo '<pre>';
+			echo intval( empty($this->metaId) );
+			echo intval( empty($this->metaClassId) );
+			echo intval( empty($this->metaClassName) );
+			echo '</pre>';
+			die();
+			$new_item = new $this->metaClassName;
 
-			$new_item->{$foreign_meta_key} = $this->items[0]->{$foreign_meta_key};
+			$new_item->{$this->metaClassId} = $this->metaId;
 			$new_item->meta_field_name = $name;
 			$new_item->meta_field_value = $value;
 
@@ -63,7 +84,6 @@ class MetaCollection extends \Illuminate\Database\Eloquent\Collection {
 		if ($meta->count() > 1) {
 			return $meta;
 		} else {
-			echo intval(empty($meta->first()->meta_field_value)) . "\n";
 			return (!empty($meta->first()->meta_field_value)) ? $meta->first()->meta_field_value : null;
 		}
 	}

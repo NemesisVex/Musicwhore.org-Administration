@@ -15,4 +15,10 @@ class ArtistMeta extends BaseMeta {
 		$this->fillable[] = 'meta_artist_id';
 	}
 
+	public function newCollection(array $models = Array()) {
+		return new ArtistMetaCollection($models);
+	}
+
+
+
 }
