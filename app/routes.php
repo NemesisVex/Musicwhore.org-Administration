@@ -16,7 +16,7 @@ Route::group(array('before' => 'auth'), function () {
 
 	// Artist
 	Route::model('artist', 'Artist');
-	Route::get( '/artist/{artist}/delete', array( 'as' => 'artist.delete', 'before' => 'auth', 'uses' => 'ArtistController@delete' ) );
+	Route::get( '/artist/{artist}/delete', array( 'as' => 'artist.delete', 'uses' => 'ArtistController@delete' ) );
 	Route::resource('artist', 'ArtistController');
 
 	// ArtistMeta
@@ -25,13 +25,17 @@ Route::group(array('before' => 'auth'), function () {
 
 	// Personnel
 	Route::model('personnel', 'Personnel');
-	Route::get( '/personnel/{personnel}/delete', array( 'as' => 'personnel.delete', 'before' => 'auth', 'uses' => 'PersonnelController@delete' ) );
-	Route::post( '/personnel/save-order', array( 'as' => 'personnel.save-order', 'before' => 'auth|csrf', 'uses' => 'PersonnelController@save_order' ) );
+	Route::get( '/personnel/{personnel}/delete', array( 'as' => 'personnel.delete', 'uses' => 'PersonnelController@delete' ) );
+	Route::post( '/personnel/save-order', array( 'as' => 'personnel.save-order', 'before' => 'csrf', 'uses' => 'PersonnelController@save_order' ) );
 	Route::resource('personnel', 'PersonnelController');
 
 	// Album
 	Route::model('album', 'Album');
-	Route::get( '/album/{album}/delete', array( 'as' => 'album.delete', 'before' => 'auth', 'uses' => 'AlbumController@delete' ) );
+	Route::get( '/album/{album}/delete', array( 'as' => 'album.delete', 'uses' => 'AlbumController@delete' ) );
+	Route::get( '/album/musicbrainz/{album}/lookup', array( 'as' => 'album.musicbrainz.lookup', 'uses' => 'AlbumController@lookup_musicbrainz' ) );
+	Route::get( '/album/discogs/{album}/lookup', array( 'as' => 'album.discogs.lookup', 'uses' => 'AlbumController@lookup_discogs' ) );
+	Route::post( '/album/musicbrainz/{album}/search', array( 'as' => 'album.musicbrainz.serach', 'before' => 'csrf', 'uses' => 'AlbumController@lookup_musicbrainz' ) );
+	Route::post( '/album/discogs/{album}/serach', array( 'as' => 'album.discogs.search', 'before' => 'csrf', 'uses' => 'AlbumController@lookup_discogs' ) );
 	Route::resource('album', 'AlbumController');
 
 	// AlbumMeta
@@ -41,7 +45,7 @@ Route::group(array('before' => 'auth'), function () {
 	// Release
 	Route::model('release', 'Release');
 	Route::resource('release', 'ReleaseController');
-	Route::get( '/release/{release}/delete', array( 'as' => 'release.delete', 'before' => 'auth', 'uses' => 'ReleaseController@delete' ) );
+	Route::get( '/release/{release}/delete', array( 'as' => 'release.delete', 'uses' => 'ReleaseController@delete' ) );
 
 	// ReleaseMeta
 	Route::model('release-meta', 'ReleaseMeta');
@@ -49,11 +53,11 @@ Route::group(array('before' => 'auth'), function () {
 
 	// Tracks
 	Route::model('track', 'Track');
-	Route::get( '/track/{track}/delete', array( 'as' => 'track.delete', 'before' => 'auth', 'uses' => 'TrackController@delete' ) );
-	Route::post( '/track/save-order', array( 'as' => 'track.save-order', 'before' => 'auth|csrf', 'uses' => 'TrackController@save_order' ) );
+	Route::get( '/track/{track}/delete', array( 'as' => 'track.delete', 'uses' => 'TrackController@delete' ) );
+	Route::post( '/track/save-order', array( 'as' => 'track.save-order', 'before' => 'csrf', 'uses' => 'TrackController@save_order' ) );
 	Route::resource('track', 'TrackController');
 
-	// ReleaseMeta
+	// TrackMeta
 	Route::model('track-meta', 'TrackMeta');
 	Route::resource('track-setting', 'TrackMetaController');
 });

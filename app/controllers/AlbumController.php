@@ -21,7 +21,7 @@ class AlbumController extends \BaseController {
 
 		$this->beforeFilter('auth');
 
-		$this->beforeFilter('csrf', array( 'only' => array( 'store', 'update', 'destroy' ) ) );
+		$this->beforeFilter('csrf', array( 'only' => array( 'store', 'update', 'destroy', 'search_musicbrainz', 'search_discogs' ) ) );
 	}
 
 	/**
@@ -246,5 +246,13 @@ class AlbumController extends \BaseController {
 		return $album->save();
 	}
 
+	public function lookup_musicbrainz($id) {
+		$method_variables = array(
+			'album' => $id,
+		);
 
+		$data = array_merge($method_variables, $this->layout_variables);
+
+		return View::make('album.musicbrainz.lookup', $data);
+	}
 }
