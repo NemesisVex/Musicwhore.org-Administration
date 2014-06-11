@@ -1,5 +1,11 @@
 <?php
 
+use \Guzzle\Http\Client;
+use \MusicBrainz\Filters\ReleaseFilter;
+use \MusicBrainz\HttpAdapters\GuzzleHttpAdapter;
+use \MusicBrainz\MusicBrainz;
+use \Discogs;
+
 class ReleaseController extends \BaseController {
 
 	private $layout_variables = array();
@@ -229,5 +235,110 @@ class ReleaseController extends \BaseController {
 		} else {
 			return Redirect::route('release.show', array('id' => $id->release_id))->with('error', 'The record was not deleted.');
 		}
+	}
+
+	public function lookup_musicbrainz($id) {
+
+		$brainz = new MusicBrainz( new GuzzleHttpAdapter( new Client() ) );
+
+		if ($id->album->meta->musicbrainz_gid != null) {
+			$args['rgid'] = $id->album->meta->musicbrainz_gid;
+		} else {
+			$args['release'] = $id->album->album_title;
+		}
+
+		$releases = $brainz->search( new ReleaseFilter( $args ) );
+
+		$method_variables = array(
+			'release' => $id,
+			'q_release' => $id->album_title,
+			'releases' => $releases,
+		);
+
+		$data = array_merge($method_variables, $this->layout_variables);
+
+		return View::make('release.musicbrainz.lookup', $data);
+	}
+
+	public function search_musicbrainz() {
+
+		$brainz = new MusicBrainz( new GuzzleHttpAdapter( new Client() ) );
+
+		$q_release_group = Input::get('q_release_group');
+		$arid = Input::get('arid');
+		$artist = Input::get('artist');
+		$id = Input::get('id');
+
+		$args = array(
+			'release' => $q_release_group,
+		);
+
+		if (!empty($arid)) {
+			$args['arid'] = $arid;
+		} elseif (!empty($artist)) {
+			$args['artist'] = $artist;
+		}
+
+		$release_groups = $brainz->search( new ReleaseFilter( $args ) );
+
+		$method_variables = array(
+			'album' => Album::find($id),
+			'q_release_group' => $q_release_group,
+			'release_groups' => $release_groups,
+		);
+
+		$data = array_merge($method_variables, $this->layout_variables);
+
+		return View::make('release.musicbrainz.lookup', $data);
+	}
+
+	public function lookup_discogs($id) {
+
+		$discogs = new Discogs\Service();
+
+		$args = array(
+			'q' => $id->album_title,
+			'artist' => $id->artist->artist_display_name,
+			'type' => 'release',
+		);
+
+		$releases = $discogs->search( $args );
+
+		$method_variables = array(
+			'album' => $id,
+			'q_master_release' => $id->album_title,
+			'releases' => $releases,
+		);
+
+		$data = array_merge($method_variables, $this->layout_variables);
+
+		return View::make('release.discogs.lookup', $data);
+	}
+
+	public function search_discogs() {
+
+		$discogs = new Discogs\Service();
+
+		$q_release = Input::get('q_release');
+		$artist = Input::get('artist');
+		$id = Input::get('id');
+
+		$args = array(
+			'q' => $q_release,
+			'artist' => $artist,
+			'type' => 'release',
+		);
+
+		$releases = $discogs->search( $args );
+
+		$method_variables = array(
+			'album' => $id,
+			'q_master_release' => $id->album_title,
+			'master_releases' => $releases,
+		);
+
+		$data = array_merge($method_variables, $this->layout_variables);
+
+		return View::make('release.discogs.lookup', $data);
 	}
 }

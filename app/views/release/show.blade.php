@@ -109,19 +109,34 @@
 		<li class="row">
 			<label class="col-md-3">Amazon ASIN</label>
 			<div class="col-md-9">
-				{{ $release->meta->asin_num }}
+				@if ($release->meta->asin_num != null)
+				<a href="http://amazon.com/gp/product/{{ $release->meta->asin_num }}">{{ $release->meta->asin_num }}</a>
+				@else
+				Not set
+				<a href="{{ route( 'release.amazon.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>
+				@endif
 			</div>
 		</li>
 		<li class="row">
 			<label class="col-md-3">Musicbrainz GID</label>
 			<div class="col-md-9">
+				@if ($release->meta->musicbrainz_gid != null)
 				{{ $release->meta->musicbrainz_gid }}
+				@else
+				Not set
+				<a href="{{ route( 'release.musicbrainz.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>
+				@endif
 			</div>
 		</li>
 		<li class="row">
 			<label class="col-md-3">Discogs ID</label>
 			<div class="col-md-9">
+				@if ($release->meta->discogs_id != null)
 				{{ $release->meta->discogs_id }}
+				@else
+				Not set
+				<a href="{{ route( 'release.discogs.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>
+				@endif
 			</div>
 		</li>
 	</ul>

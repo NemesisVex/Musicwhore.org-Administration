@@ -32,7 +32,6 @@
 		</div>
 		<div class="col-md-2">
 			{{ Form::submit( 'Search', array( 'class' => 'btn btn-default' ) ) }}
-			{{ Form::hidden( 'type', 'master' ) }}
 			{{ Form::hidden( 'artist', $album->artist->artist_display_name ) }}
 			{{ Form::hidden( 'id', $album->album_id ) }}
 		</div>

@@ -28,7 +28,7 @@
 	{{ Form::open( array( 'route' => 'album.musicbrainz.search', 'class' => 'form-horizontal' ) ) }}
 	<div class="form-group">
 		<div class="col-md-10">
-			{{ Form::text( 'q_release_group', $q_release_group, array( 'class' => 'form-control' ) ) }}
+			{{ Form::text( 'q_master_release', $q_master_release, array( 'class' => 'form-control' ) ) }}
 		</div>
 		<div class="col-md-2">
 			{{ Form::submit( 'Search', array( 'class' => 'btn btn-default' ) ) }}

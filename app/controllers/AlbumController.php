@@ -2,7 +2,6 @@
 
 use \Guzzle\Http\Client;
 use \MusicBrainz\Filters\ReleaseGroupFilter;
-use \MusicBrainz\Filters\ReleaseFilter;
 use \MusicBrainz\HttpAdapters\GuzzleHttpAdapter;
 use \MusicBrainz\MusicBrainz;
 use \Discogs;
@@ -299,12 +298,12 @@ class AlbumController extends \BaseController {
 			$args['artist'] = $artist;
 		}
 
-		$master_releases = $brainz->search( new ReleaseGroupFilter( $args ) );
+		$release_groups = $brainz->search( new ReleaseGroupFilter( $args ) );
 
 		$method_variables = array(
 			'album' => Album::find($id),
-			'q_master_release' => $q_release_group,
-			'master_releases' => $master_releases,
+			'q_release_group' => $q_release_group,
+			'release_groups' => $release_groups,
 		);
 
 		$data = array_merge($method_variables, $this->layout_variables);
@@ -327,6 +326,34 @@ class AlbumController extends \BaseController {
 		$method_variables = array(
 			'album' => $id,
 			'q_master_release' => $id->album_title,
+			'master_releases' => $master_releases,
+		);
+
+		$data = array_merge($method_variables, $this->layout_variables);
+
+		return View::make('album.discogs.lookup', $data);
+	}
+
+	public function search_discogs() {
+
+		$discogs = new Discogs\Service();
+
+		$q_master_release = Input::get('q_master_release');
+		$artist = Input::get('artist');
+		$type = Input::get('type');
+		$id = Input::get('id');
+
+		$args = array(
+			'q' => $q_master_release,
+			'artist' => $artist,
+			'type' => $type,
+		);
+
+		$master_releases = $discogs->search( $args );
+
+		$method_variables = array(
+			'album' => Album::find($id),
+			'q_master_release' => $q_master_release,
 			'master_releases' => $master_releases,
 		);
 
