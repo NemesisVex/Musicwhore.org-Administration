@@ -121,7 +121,7 @@
 			<label class="col-md-3">Musicbrainz GID</label>
 			<div class="col-md-9">
 				@if ($release->meta->musicbrainz_gid != null)
-				{{ $release->meta->musicbrainz_gid }}
+				<a href="http://musicbrainz.org/release/{{ $release->meta->musicbrainz_gid }}">{{ $release->meta->musicbrainz_gid }}</a>
 				@else
 				Not set
 				<a href="{{ route( 'release.musicbrainz.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>
@@ -131,8 +131,8 @@
 		<li class="row">
 			<label class="col-md-3">Discogs ID</label>
 			<div class="col-md-9">
-				@if ($release->meta->discogs_id != null)
-				{{ $release->meta->discogs_id }}
+				@if ($release->meta->discogs_release_id != null)
+				<a href="http://discogs.com/release/{{ $release->meta->discogs_release_id }}">{{ $release->meta->discogs_release_id }}</a>
 				@else
 				Not set
 				<a href="{{ route( 'release.discogs.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>

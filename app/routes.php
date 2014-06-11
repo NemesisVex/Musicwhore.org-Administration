@@ -51,7 +51,7 @@ Route::group(array('before' => 'auth'), function () {
 	Route::get( '/release/amazon/{release}/lookup', array( 'as' => 'release.amazon.lookup', 'uses' => 'ReleaseController@lookup_amazon' ) );
 	Route::get( '/release/itunes/{release}/lookup', array( 'as' => 'release.itunes.lookup', 'uses' => 'ReleaseController@lookup_itunes' ) );
 	Route::get( '/release/musicbrainz/{release}/lookup', array( 'as' => 'release.musicbrainz.lookup', 'uses' => 'ReleaseController@lookup_musicbrainz' ) );
-	Route::get( '/release/discogs/{release}/lookup', array( 'as' => 'release.discogs.lookup', 'uses' => 'ReleaseController@lookup_amazon' ) );
+	Route::get( '/release/discogs/{release}/lookup', array( 'as' => 'release.discogs.lookup', 'uses' => 'ReleaseController@lookup_discogs' ) );
 	Route::post( '/release/amazon/search', array( 'as' => 'release.amazon.search', 'uses' => 'ReleaseController@search_musicbrainz' ) );
 	Route::post( '/release/itunes/search', array( 'as' => 'release.itunes.search', 'uses' => 'ReleaseController@search_itunes' ) );
 	Route::post( '/release/musicbrainz/search', array( 'as' => 'release.musicbrainz.search', 'uses' => 'ReleaseController@search_musicbrainz' ) );

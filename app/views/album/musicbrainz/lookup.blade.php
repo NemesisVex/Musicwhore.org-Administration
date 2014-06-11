@@ -49,7 +49,7 @@
 		<div class="col-sm-12">
 			<div class="radio">
 				<label class="mb-result" title="{{ $release_group->id }}" data-toggle="tooptip" data-placement="above">
-					{{ Form::radio( 'musicbrainz_gid', $release_group->getId() ) }}
+					{{ Form::radio( 'musicbrainz_gid', $release_group->getId(), ($album->meta->musicbrainz_gid != null && ($album->meta->musicbrainz_gid == $release_group->getId() ) ) ) }}
 					<a href="http://musicbrainz.org/release-group/{{ $release_group->getId() }}">{{ $release_group->getTitle() }}</a>
 				</label>
 			</div>

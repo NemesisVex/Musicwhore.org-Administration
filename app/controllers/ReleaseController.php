@@ -298,15 +298,16 @@ class ReleaseController extends \BaseController {
 
 		$args = array(
 			'q' => $id->album_title,
-			'artist' => $id->artist->artist_display_name,
+			'artist' => $id->album->artist->artist_display_name,
 			'type' => 'release',
 		);
 
 		$releases = $discogs->search( $args );
 
 		$method_variables = array(
-			'album' => $id,
-			'q_master_release' => $id->album_title,
+			'release' => $id,
+			'artist' => $id->album->artist->artist_display_name,
+			'q_release' => $id->album->album_title,
 			'releases' => $releases,
 		);
 
@@ -332,9 +333,10 @@ class ReleaseController extends \BaseController {
 		$releases = $discogs->search( $args );
 
 		$method_variables = array(
-			'album' => $id,
-			'q_master_release' => $id->album_title,
-			'master_releases' => $releases,
+			'release' => Release::find($id),
+			'artist' => $artist,
+			'q_release' => $q_release,
+			'releases' => $releases,
 		);
 
 		$data = array_merge($method_variables, $this->layout_variables);

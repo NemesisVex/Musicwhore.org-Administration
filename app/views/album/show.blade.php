@@ -97,7 +97,7 @@
 				@if ($album->meta->musicbrainz_gid !== null)
 				<a href="http://musicbrainz.org/release-group/{{ $album->meta->musicbrainz_gid }}">{{ $album->meta->musicbrainz_gid }}</a>
 				@else
-				Not set.
+				Not set
 				<a href="{{ route( 'album.musicbrainz.lookup', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 				@endif
 			</div>

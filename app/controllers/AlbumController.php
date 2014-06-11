@@ -325,6 +325,7 @@ class AlbumController extends \BaseController {
 
 		$method_variables = array(
 			'album' => $id,
+			'artist' => $id->artist->artist_display_name,
 			'q_master_release' => $id->album_title,
 			'master_releases' => $master_releases,
 		);
@@ -340,19 +341,19 @@ class AlbumController extends \BaseController {
 
 		$q_master_release = Input::get('q_master_release');
 		$artist = Input::get('artist');
-		$type = Input::get('type');
 		$id = Input::get('id');
 
 		$args = array(
 			'q' => $q_master_release,
 			'artist' => $artist,
-			'type' => $type,
+			'type' => 'master',
 		);
 
 		$master_releases = $discogs->search( $args );
 
 		$method_variables = array(
 			'album' => Album::find($id),
+			'artist' => $artist,
 			'q_master_release' => $q_master_release,
 			'master_releases' => $master_releases,
 		);
