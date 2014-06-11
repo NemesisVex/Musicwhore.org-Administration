@@ -95,9 +95,10 @@
 			<label class="col-md-3">Musicbrainz GID</label>
 			<div class="col-md-9">
 				@if ($album->meta->musicbrainz_gid !== null)
-				{{ $album->meta->musicbrainz_gid }}
+				<a href="http://musicbrainz.org/release-group/{{ $album->meta->musicbrainz_gid }}">{{ $album->meta->musicbrainz_gid }}</a>
 				@else
 				Not set.
+				<a href="{{ route( 'album.musicbrainz.lookup', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 				@endif
 			</div>
 		</li>
@@ -105,7 +106,7 @@
 			<label class="col-md-3">Discogs ID</label>
 			<div class="col-md-9">
 				@if ($album->meta->discogs_master_release_id !== null)
-				{{ $album->meta->discogs_master_release_id }}
+				<a href="http://discogs.com/master/{{ $album->meta->discogs_master_release_id }}">{{ $album->meta->discogs_master_release_id }}</a>
 				@else
 				Not set
 				@endif

@@ -17,6 +17,9 @@ Route::group(array('before' => 'auth'), function () {
 	// Artist
 	Route::model('artist', 'Artist');
 	Route::get( '/artist/{artist}/delete', array( 'as' => 'artist.delete', 'uses' => 'ArtistController@delete' ) );
+	Route::get( '/artist/musicbrainz/{album}/lookup', array( 'as' => 'artist.musicbrainz.lookup', 'uses' => 'ArtistController@lookup_musicbrainz' ) );
+	Route::get( '/artist/discogs/{album}/lookup', array( 'as' => 'artist.discogs.lookup', 'uses' => 'ArtistController@lookup_discogs' ) );
+	Route::post( '/artist/musicbrainz/search', array( 'as' => 'artist.musicbrainz.search', 'uses' => 'ArtistController@search_musicbrainz' ) );
 	Route::resource('artist', 'ArtistController');
 
 	// ArtistMeta
@@ -34,8 +37,8 @@ Route::group(array('before' => 'auth'), function () {
 	Route::get( '/album/{album}/delete', array( 'as' => 'album.delete', 'uses' => 'AlbumController@delete' ) );
 	Route::get( '/album/musicbrainz/{album}/lookup', array( 'as' => 'album.musicbrainz.lookup', 'uses' => 'AlbumController@lookup_musicbrainz' ) );
 	Route::get( '/album/discogs/{album}/lookup', array( 'as' => 'album.discogs.lookup', 'uses' => 'AlbumController@lookup_discogs' ) );
-	Route::post( '/album/musicbrainz/{album}/search', array( 'as' => 'album.musicbrainz.search', 'before' => 'csrf', 'uses' => 'AlbumController@lookup_musicbrainz' ) );
-	Route::post( '/album/discogs/{album}/serach', array( 'as' => 'album.discogs.search', 'before' => 'csrf', 'uses' => 'AlbumController@lookup_discogs' ) );
+	Route::post( '/artist/musicbrainz/search', array( 'as' => 'album.musicbrainz.search', 'uses' => 'AlbumController@search_musicbrainz' ) );
+	Route::post( '/artist/discogs/search', array( 'as' => 'album.discogs.search', 'uses' => 'AlbumController@search_discogs' ) );
 	Route::resource('album', 'AlbumController');
 
 	// AlbumMeta

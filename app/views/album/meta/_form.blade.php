@@ -5,20 +5,21 @@
 
 <div class="form-group">
 	{{ Form::label( 'musicbrainz_gid', 'Musicbrainz GID', array( 'class' => 'col-md-3', 'id' => 'musicbrainz-gid-label', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 'title' => 'Map to Release Group' ) ) }}
-	<div class="col-md-8">
+	<div class="col-md-7">
 		{{ Form::text( 'musicbrainz_gid', $album->meta->musicbrainz_gid, array( 'class' => 'form-control' ) ) }}
 	</div>
-	<div class="col-sm-1">
+	<div class="col-sm-2">
 		<a href="{{ route( 'album.musicbrainz.lookup', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 	</div>
 </div>
 
 <div class="form-group">
 	{{ Form::label( 'discogs_master_release_id', 'Discogs ID', array( 'class' => 'col-md-3', 'id' => 'discogs-master-release-id-label', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom', 'title' => 'Map to Master Release' ) ) }}
-	<div class="col-md-8">
+	<div class="col-md-7">
 		{{ Form::text( 'discogs_master_release_id', $album->meta->discogs_master_release_id, array( 'class' => 'form-control', 'data-toggle' => 'tooltip', 'title' => 'map to Master Release' ) ) }}
 	</div>
-	<div class="col-sm-1">
+	<div class="col-sm-2">
+		<a href="{{ route( 'album.discogs.lookup', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 	</div>
 </div>
 
