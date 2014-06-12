@@ -9,7 +9,7 @@
         "aws/aws-sdk-php": "2.*",
         "mikealmond/musicbrainz": "0.2.*@dev",
         "ricbra/php-discogs-api": "dev-master",
-        "exeu/apai-io": "dev-master",
+        "exeu/apai-io": "dev-master"
     },
 	"autoload": {
 		"classmap": [
