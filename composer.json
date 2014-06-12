@@ -10,7 +10,6 @@
         "mikealmond/musicbrainz": "0.2.*@dev",
         "ricbra/php-discogs-api": "dev-master",
         "exeu/apai-io": "dev-master",
-        "pond/tunes-bundle": "*"
     },
 	"autoload": {
 		"classmap": [
