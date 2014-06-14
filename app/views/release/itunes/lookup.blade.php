@@ -5,7 +5,7 @@
 &raquo; {{ $release->album->artist->artist_display_name }}
 &raquo; {{ $release->album->album_title }}
 @endif
-&raquo; Amazon lookup
+&raquo; iTunes lookup
 @stop
 
 @section('section_header')
@@ -20,12 +20,12 @@
 @stop
 
 @section('section_label')
-<h3>Amazon lookup</h3>
+<h3>iTunes lookup</h3>
 @stop
 
 @section('content')
 <div class="col-md-12">
-	{{ Form::open( array( 'route' => 'release.amazon.search', 'class' => 'form-horizontal' ) ) }}
+	{{ Form::open( array( 'route' => 'release.itunes.search', 'class' => 'form-horizontal' ) ) }}
 	<div class="form-group">
 		<div class="form-group">
 			{{ Form::label( 'q_release', 'Title', array( 'class' => 'col-md-3' ) ) }}
@@ -57,25 +57,20 @@
 	</div>
 	{{ Form::close() }}
 
-	@if (!empty($releases->Request->Errors))
-	<p class="alert alert-danger">
-		{{ $releases->Request->Errors->Error->Message }}
-	</p>
-	@else
 	{{ Form::model( $release, array( 'route' => array('release-setting.update', $release->release_id), 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'put' ) ) }}
 
 	{{ Form::submit( 'Save', array( 'class' => 'btn btn-default' ) ) }}
 
 	@if (count($releases) > 0)
-	@foreach ($releases->Item as $amazon_release)
+	@foreach ($releases->results as $itunes_release)
 	<div class="form-group">
 		<div class="col-sm-2">
 			<div class="radio">
-				<label class="mb-result" title="{{ $amazon_release->ASIN }}" data-toggle="tooptip" data-placement="above">
-					{{ Form::radio( 'asin_num', $amazon_release->ASIN, ($amazon_release->ASIN == $release->meta->asin_num) ) }}
-					<a href="http://amazon.{{ $domain }}/gp/product/{{ $amazon_release->ASIN }}">
-						@if (!empty($amazon_release->ASIN) )
-						{{ $amazon_release->ASIN }}
+				<label class="mb-result" title="{{ $itunes_release->collectionId }}" data-toggle="tooptip" data-placement="above">
+					{{ Form::radio( 'itunes_collection_id', $itunes_release->collectionId, ($itunes_release->collectionId == $release->meta->itunes_collection_id) ) }}
+					<a href="{{ $itunes_release->collectionViewUrl }}">
+						@if (!empty($itunes_release->collectionId) )
+						{{ $itunes_release->collectionId }}
 						@else
 						Not set
 						@endif
@@ -84,10 +79,10 @@
 			</div>
 		</div>
 		<div class="col-sm-2">
-			{{ $amazon_release->ItemAttributes->EAN}}
+			{{ $itunes_release->artistName}}
 		</div>
 		<div class="col-sm-8">
-			{{ $amazon_release->ItemAttributes->Title}}
+			{{ $itunes_release->collectionName}}
 		</div>
 	</div>
 	@endforeach
@@ -106,12 +101,9 @@
 
 	@else
 	<p>
-		No releases were found for this album.
+		No collections were found for this album.
 	</p>
 	@endif
-	@endif
-
-
 
 </div>
 @stop

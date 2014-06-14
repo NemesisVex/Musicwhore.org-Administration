@@ -31,6 +31,16 @@
 	</div>
 </div>
 
+<div class="form-group">
+	{{ Form::label( 'itunes_collection_id', 'iTunes ID', array( 'class' => 'col-md-3' ) ) }}
+	<div class="col-md-7">
+		{{ Form::text( 'itunes_collection_id', $release->meta->itunes_collection_id, array( 'class' => 'form-control' ) ) }}
+	</div>
+	<div class="col-sm-2">
+		<a href="{{ route( 'release.itunes.lookup', array( 'album' => $release->release_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
+	</div>
+</div>
+
 <div class="col-md-offset-3 col-md-9">
 	{{ Form::submit('Save', array( 'class' => 'btn btn-default' ) ) }}
 </div>

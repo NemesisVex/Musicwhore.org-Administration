@@ -110,7 +110,7 @@
 			<label class="col-md-3">Amazon ASIN</label>
 			<div class="col-md-9">
 				@if ($release->meta->asin_num != null)
-				<a href="http://amazon.com/gp/product/{{ $release->meta->asin_num }}">{{ $release->meta->asin_num }}</a>
+				<a href="http://amazon.{{ Config::get('amazon.country_codes')[$release->album->artist->meta->default_amazon_locale] }}/gp/product/{{ $release->meta->asin_num }}">{{ $release->meta->asin_num }}</a>
 				@else
 				Not set
 				<a href="{{ route( 'release.amazon.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>
@@ -136,6 +136,17 @@
 				@else
 				Not set
 				<a href="{{ route( 'release.discogs.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>
+				@endif
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">iTunes ID</label>
+			<div class="col-md-9">
+				@if ($release->meta->itunes_collection_id != null)
+				<a href="http://discogs.com/release/{{ $release->meta->itunes_collection_id }}">{{ $release->meta->itunes_collection_id }}</a>
+				@else
+				Not set
+				<a href="{{ route( 'release.itunes.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>
 				@endif
 			</div>
 		</li>

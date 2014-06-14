@@ -435,4 +435,51 @@ class ReleaseController extends \BaseController {
 	private function get_associate_tag($locale = 'us') {
 		return $this->associate_tag_base . $this->associate_suffixes[$locale];
 	}
+
+	public function lookup_itunes($id) {
+
+		$locale = strtoupper($id->album->artist->meta->default_itunes_store);
+		if (empty($locale)) { $locale = 'US'; }
+
+		$results = ITunes::musicInRegion($locale, $id->album->artist->artist_display_name . ' ' . $id->album->album_title, array('entity' => 'album'));
+		$releases = json_decode($results);
+
+		$method_variables = array(
+			'release' => $id,
+			'artist' => $id->album->artist->artist_display_name,
+			'q_release' => $id->album->album_title,
+			'releases' => $releases,
+			'locales' => Config::get('itunes.locales'),
+			'locale' => $locale,
+		);
+
+		$data = array_merge($method_variables, $this->layout_variables);
+
+		return View::make('release.itunes.lookup', $data);
+	}
+
+	public function search_itunes() {
+		$q_release = Input::get('q_release');
+		$artist = Input::get('artist');
+		$locale = Input::get('locale');
+		$id = Input::get('id');
+
+		if (empty($locale)) { $locale = 'US'; }
+
+		$results = ITunes::musicInRegion($locale, $artist . ' ' . $q_release, array('entity' => 'album'));
+		$releases = json_decode($results);
+
+		$method_variables = array(
+			'release' => Release::find($id),
+			'artist' => $artist,
+			'q_release' => $q_release,
+			'releases' => $releases,
+			'locales' => Config::get('itunes.locales'),
+			'locale' => $locale,
+		);
+
+		$data = array_merge($method_variables, $this->layout_variables);
+
+		return View::make('release.itunes.lookup', $data);
+	}
 }
