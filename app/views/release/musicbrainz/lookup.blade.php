@@ -50,7 +50,13 @@
 			<div class="radio">
 				<label class="mb-result" title="{{ $release->id }}" data-toggle="tooptip" data-placement="above">
 					{{ Form::radio( 'musicbrainz_gid', $release->getId() ) }}
-					<a href="http://musicbrainz.org/release/{{ $release->getId() }}">{{ $release->barcode }}</a>
+					<a href="http://musicbrainz.org/release/{{ $release->getId() }}">
+						@if (!empty($release->barcode) )
+						{{ $release->barcode }}
+						@else
+						Not set
+						@endif
+					</a>
 				</label>
 			</div>
 		</div>

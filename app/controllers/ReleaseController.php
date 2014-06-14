@@ -5,10 +5,22 @@ use \MusicBrainz\Filters\ReleaseFilter;
 use \MusicBrainz\HttpAdapters\GuzzleHttpAdapter;
 use \MusicBrainz\MusicBrainz;
 use \Discogs;
+use ApaiIO\Request\RequestFactory;
+use ApaiIO\Configuration\GenericConfiguration;
+use ApaiIO\Operations\Search;
+use ApaiIO\ResponseTransformer\ObjectToArray;
+use ApaiIO\Operations\Lookup;
+use ApaiIO\Operations\SimilarityLookup;
+use ApaiIO\ApaiIO;
+use ApaiIO\Operations\BrowseNodeLookup;
 
 class ReleaseController extends \BaseController {
 
 	private $layout_variables = array();
+	private $amazon_config;
+	private $associate_suffixes;
+	private $country_codes;
+	private $associate_tag_base = 'musicwhore-';
 
 	public function __construct() {
 		global $config_url_base;
@@ -16,6 +28,11 @@ class ReleaseController extends \BaseController {
 		$this->layout_variables = array(
 			'config_url_base' => $config_url_base,
 		);
+
+		$this->amazon_config = new GenericConfiguration();
+		$this->amazon_config->setAccessKey(ACCESS_KEY_ID)->setSecretKey(SECRET_ACCESS_KEY);
+		$this->associate_suffixes = Config::get('amazon.associate_suffixes');
+		$this->country_codes = Config::get('amazon.country_codes');
 
 		$this->beforeFilter('auth');
 
@@ -342,5 +359,85 @@ class ReleaseController extends \BaseController {
 		$data = array_merge($method_variables, $this->layout_variables);
 
 		return View::make('release.discogs.lookup', $data);
+	}
+
+	public function lookup_amazon($id) {
+
+		$locale = $id->album->artist->meta->default_amazon_locale;
+		if (empty($locale)) { $locale = 'us'; }
+
+		$associate_tag = $this->get_associate_tag($locale);
+		$this->amazon_config->setAssociateTag($associate_tag);
+		$this->amazon_config->setCountry($this->country_codes[$locale]);
+
+		$apaiIO = new ApaiIO($this->amazon_config);
+
+		$search = new Search();
+		$search->setCategory('Music');
+		$search->setArtist($id->album->artist->artist_display_name);
+		$search->setKeywords($id->album->album_title);
+		$search->setResponseGroup(array('Large', 'Small'));
+
+		$response = simplexml_load_string($apaiIO->runOperation($search));
+		$releases = json_decode(json_encode($response->Items));
+
+		$method_variables = array(
+			'release' => $id,
+			'artist' => $id->album->artist->artist_display_name,
+			'q_release' => $id->album->album_title,
+			'releases' => $releases,
+			'domain' => $this->country_codes[$locale],
+			'locales' => Config::get('amazon.locales'),
+			'locale' => $locale,
+		);
+
+		$data = array_merge($method_variables, $this->layout_variables);
+
+		return View::make('release.amazon.lookup', $data);
+	}
+
+	public function search_amazon() {
+
+		$q_release = Input::get('q_release');
+		$artist = Input::get('artist');
+		$locale = Input::get('locale');
+		$id = Input::get('id');
+
+		if (empty($locale)) { $locale = 'us'; }
+
+		$associate_tag = $this->get_associate_tag($locale);
+		$this->amazon_config->setAssociateTag($associate_tag);
+		$this->amazon_config->setCountry($this->country_codes[$locale]);
+
+		$apaiIO = new ApaiIO($this->amazon_config);
+
+		$search = new Search();
+		$search->setCategory('Music');
+		if (!empty($artist)) {
+			$search->setArtist($artist);
+		}
+		$search->setKeywords($q_release);
+		$search->setResponseGroup(array('Large', 'Small'));
+
+		$response = simplexml_load_string($apaiIO->runOperation($search));
+		$releases = json_decode(json_encode($response->Items));
+
+		$method_variables = array(
+			'release' => Release::find($id),
+			'artist' => $artist,
+			'q_release' => $q_release,
+			'releases' => $releases,
+			'domain' => $this->country_codes[$locale],
+			'locales' => Config::get('amazon.locales'),
+			'locale' => $locale,
+		);
+
+		$data = array_merge($method_variables, $this->layout_variables);
+
+		return View::make('release.amazon.lookup', $data);
+	}
+
+	private function get_associate_tag($locale = 'us') {
+		return $this->associate_tag_base . $this->associate_suffixes[$locale];
 	}
 }
