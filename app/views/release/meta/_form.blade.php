@@ -24,7 +24,7 @@
 <div class="form-group">
 	{{ Form::label( 'discogs_release_id', 'Discogs ID', array( 'class' => 'col-md-3', 'id' => 'discogs-id-label', 'title' => 'Map to Release', 'data-toggle' => 'tooltip', 'data-placement' => 'bottom' ) ) }}
 	<div class="col-md-7">
-		{{ Form::text( 'discogs_release_id', $release->meta->discogs_id, array( 'class' => 'form-control' ) ) }}
+		{{ Form::text( 'discogs_release_id', $release->meta->discogs_release_id, array( 'class' => 'form-control' ) ) }}
 	</div>
 	<div class="col-sm-2">
 		<a href="{{ route( 'release.discogs.lookup', array( 'album' => $release->release_id ) ) }}" class="btn btn-default btn-sm">Look up</a>

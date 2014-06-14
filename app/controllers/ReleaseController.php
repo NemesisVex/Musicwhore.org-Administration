@@ -5,14 +5,9 @@ use \MusicBrainz\Filters\ReleaseFilter;
 use \MusicBrainz\HttpAdapters\GuzzleHttpAdapter;
 use \MusicBrainz\MusicBrainz;
 use \Discogs;
-use ApaiIO\Request\RequestFactory;
 use ApaiIO\Configuration\GenericConfiguration;
 use ApaiIO\Operations\Search;
-use ApaiIO\ResponseTransformer\ObjectToArray;
-use ApaiIO\Operations\Lookup;
-use ApaiIO\Operations\SimilarityLookup;
 use ApaiIO\ApaiIO;
-use ApaiIO\Operations\BrowseNodeLookup;
 
 class ReleaseController extends \BaseController {
 

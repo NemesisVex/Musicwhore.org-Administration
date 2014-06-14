@@ -44,21 +44,24 @@
 
 	{{ Form::submit( 'Save', array( 'class' => 'btn btn-default' ) ) }}
 
-	@foreach ($releases as $release)
+	@foreach ($releases as $brainz_release)
 	<div class="form-group">
-		<div class="col-sm-12">
+		<div class="col-sm-2">
 			<div class="radio">
-				<label class="mb-result" title="{{ $release->id }}" data-toggle="tooptip" data-placement="above">
-					{{ Form::radio( 'musicbrainz_gid', $release->getId() ) }}
-					<a href="http://musicbrainz.org/release/{{ $release->getId() }}">
-						@if (!empty($release->barcode) )
-						{{ $release->barcode }}
+				<label class="mb-result" title="{{ $brainz_release->id }}" data-toggle="tooptip" data-placement="above">
+					{{ Form::radio( 'musicbrainz_gid', $brainz_release->getId(), ($brainz_release->getId() == $release->meta->musicbrainz_gid) ) }}
+					<a href="http://musicbrainz.org/release/{{ $brainz_release->getId() }}">
+						@if (!empty($brainz_release->barcode) )
+						{{ $brainz_release->barcode }}
 						@else
 						Not set
 						@endif
 					</a>
 				</label>
 			</div>
+		</div>
+		<div class="col-sm-10">
+			{{ $brainz_release->title }}
 		</div>
 	</div>
 	@endforeach

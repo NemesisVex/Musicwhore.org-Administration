@@ -53,15 +53,21 @@
 
 	{{ Form::submit( 'Save', array( 'class' => 'btn btn-default' ) ) }}
 
-	@foreach ($releases as $release)
+	@foreach ($releases as $discog_release)
 	<div class="form-group">
-		<div class="col-sm-12">
+		<div class="col-sm-4">
 			<div class="radio">
-				<label class="discogs-result" title="{{ $release->getId() }}" data-toggle="tooptip" data-placement="top">
-					{{ Form::radio( 'discogs_release_id', $release->getId() ) }}
-					<a href="http://discogs.com/release/{{ $release->getId() }}">{{ $release->getTitle() }}</a>
+				<label class="discogs-result" title="{{ $discog_release->getId() }}" data-toggle="tooptip" data-placement="top">
+					{{ Form::radio( 'discogs_release_id', $discog_release->getId(), ($discog_release->getID() == $release->meta->discogs_release_id) ) }}
+					<a href="{{ $discog_release->getUri() }}">{{ $discog_release->getTitle() }}</a>
 				</label>
 			</div>
+		</div>
+		<div class="col-sm-2">
+			{{ $discog_release->getCatNo() }}
+		</div>
+		<div class="col-sm-6">
+			{{ $discog_release->getCountry() }}
 		</div>
 	</div>
 	@endforeach
