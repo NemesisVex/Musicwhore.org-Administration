@@ -113,7 +113,7 @@
 				<a href="http://amazon.{{ Config::get('amazon.country_codes')[$release->album->artist->meta->default_amazon_locale] }}/gp/product/{{ $release->meta->asin_num }}">{{ $release->meta->asin_num }}</a>
 				@else
 				Not set
-				<a href="{{ route( 'release.amazon.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>
+				<a href="{{ route( 'release-setting.amazon.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>
 				@endif
 			</div>
 		</li>
@@ -124,7 +124,7 @@
 				<a href="http://musicbrainz.org/release/{{ $release->meta->musicbrainz_gid }}">{{ $release->meta->musicbrainz_gid }}</a>
 				@else
 				Not set
-				<a href="{{ route( 'release.musicbrainz.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>
+				<a href="{{ route( 'release-setting.musicbrainz.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>
 				@endif
 			</div>
 		</li>
@@ -135,7 +135,7 @@
 				<a href="http://discogs.com/release/{{ $release->meta->discogs_release_id }}">{{ $release->meta->discogs_release_id }}</a>
 				@else
 				Not set
-				<a href="{{ route( 'release.discogs.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>
+				<a href="{{ route( 'release-setting.discogs.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>
 				@endif
 			</div>
 		</li>
@@ -146,7 +146,7 @@
 				<a href="http://discogs.com/release/{{ $release->meta->itunes_collection_id }}">{{ $release->meta->itunes_collection_id }}</a>
 				@else
 				Not set
-				<a href="{{ route( 'release.itunes.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>
+				<a href="{{ route( 'release-setting.itunes.lookup', array( 'release' => $release->release_id ) ) }}" class="btn btn-default btn-xs">Look up</a>
 				@endif
 			</div>
 		</li>

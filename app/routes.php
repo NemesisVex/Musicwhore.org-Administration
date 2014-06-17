@@ -17,13 +17,16 @@ Route::group(array('before' => 'auth'), function () {
 	// Artist
 	Route::model('artist', 'Artist');
 	Route::get( '/artist/{artist}/delete', array( 'as' => 'artist.delete', 'uses' => 'ArtistController@delete' ) );
-	Route::get( '/artist/musicbrainz/{album}/lookup', array( 'as' => 'artist.musicbrainz.lookup', 'uses' => 'ArtistController@lookup_musicbrainz' ) );
-	Route::get( '/artist/discogs/{album}/lookup', array( 'as' => 'artist.discogs.lookup', 'uses' => 'ArtistController@lookup_discogs' ) );
-	Route::post( '/artist/musicbrainz/search', array( 'as' => 'artist.musicbrainz.search', 'uses' => 'ArtistController@search_musicbrainz' ) );
 	Route::resource('artist', 'ArtistController');
 
 	// ArtistMeta
 	Route::model('artist-meta', 'ArtistMeta');
+	Route::get( '/artist-setting/musicbrainz/{artist}/lookup', array( 'as' => 'artist-setting.musicbrainz.lookup', 'uses' => 'ArtistMetaController@lookup_musicbrainz' ) );
+	Route::get( '/artist-setting/discogs/{artist}/lookup', array( 'as' => 'artist-setting.discogs.lookup', 'uses' => 'ArtistMetaController@lookup_discogs' ) );
+	Route::get( '/artist-setting/itunes/{artist}/lookup', array( 'as' => 'artist-setting.itunes.lookup', 'uses' => 'ArtistMetaController@lookup_itunes' ) );
+	Route::post( '/artist-setting/musicbrainz/search', array( 'as' => 'artist-setting.musicbrainz.search', 'uses' => 'ArtistMetaController@search_musicbrainz' ) );
+	Route::post( '/artist-setting/discogs/search', array( 'as' => 'artist-setting.discogs.search', 'uses' => 'ArtistMetaController@search_discogs' ) );
+	Route::post( '/artist-setting/itunes/{artist}/search', array( 'as' => 'artist-setting.itunes.serach', 'uses' => 'ArtistMetaController@search_itunes' ) );
 	Route::resource('artist-setting', 'ArtistMetaController');
 
 	// Personnel
@@ -35,31 +38,31 @@ Route::group(array('before' => 'auth'), function () {
 	// Album
 	Route::model('album', 'Album');
 	Route::get( '/album/{album}/delete', array( 'as' => 'album.delete', 'uses' => 'AlbumController@delete' ) );
-	Route::get( '/album/musicbrainz/{album}/lookup', array( 'as' => 'album.musicbrainz.lookup', 'uses' => 'AlbumController@lookup_musicbrainz' ) );
-	Route::get( '/album/discogs/{album}/lookup', array( 'as' => 'album.discogs.lookup', 'uses' => 'AlbumController@lookup_discogs' ) );
-	Route::post( '/album/musicbrainz/search', array( 'as' => 'album.musicbrainz.search', 'uses' => 'AlbumController@search_musicbrainz' ) );
-	Route::post( '/album/discogs/search', array( 'as' => 'album.discogs.search', 'uses' => 'AlbumController@search_discogs' ) );
 	Route::resource('album', 'AlbumController');
 
 	// AlbumMeta
 	Route::model('album-meta', 'AlbumMeta');
+	Route::get( '/album-setting/musicbrainz/{album}/lookup', array( 'as' => 'album-setting.musicbrainz.lookup', 'uses' => 'AlbumController@lookup_musicbrainz' ) );
+	Route::get( '/album-setting/discogs/{album}/lookup', array( 'as' => 'album-setting.discogs.lookup', 'uses' => 'AlbumController@lookup_discogs' ) );
+	Route::post( '/album-setting/musicbrainz/search', array( 'as' => 'album-setting.musicbrainz.search', 'uses' => 'AlbumController@search_musicbrainz' ) );
+	Route::post( '/album-setting/discogs/search', array( 'as' => 'album-setting.discogs.search', 'uses' => 'AlbumController@search_discogs' ) );
 	Route::resource('album-setting', 'AlbumMetaController');
 
 	// Release
 	Route::model('release', 'Release');
 	Route::get( '/release/{release}/delete', array( 'as' => 'release.delete', 'uses' => 'ReleaseController@delete' ) );
-	Route::get( '/release/amazon/{release}/lookup', array( 'as' => 'release.amazon.lookup', 'uses' => 'ReleaseController@lookup_amazon' ) );
-	Route::get( '/release/itunes/{release}/lookup', array( 'as' => 'release.itunes.lookup', 'uses' => 'ReleaseController@lookup_itunes' ) );
-	Route::get( '/release/musicbrainz/{release}/lookup', array( 'as' => 'release.musicbrainz.lookup', 'uses' => 'ReleaseController@lookup_musicbrainz' ) );
-	Route::get( '/release/discogs/{release}/lookup', array( 'as' => 'release.discogs.lookup', 'uses' => 'ReleaseController@lookup_discogs' ) );
-	Route::post( '/release/amazon/search', array( 'as' => 'release.amazon.search', 'uses' => 'ReleaseController@search_amazon' ) );
-	Route::post( '/release/itunes/search', array( 'as' => 'release.itunes.search', 'uses' => 'ReleaseController@search_itunes' ) );
-	Route::post( '/release/musicbrainz/search', array( 'as' => 'release.musicbrainz.search', 'uses' => 'ReleaseController@search_musicbrainz' ) );
-	Route::post( '/release/discogs/search', array( 'as' => 'release.discogs.search', 'uses' => 'ReleaseController@search_discogs' ) );
 	Route::resource('release', 'ReleaseController');
 
 	// ReleaseMeta
 	Route::model('release-meta', 'ReleaseMeta');
+	Route::get( '/release-setting/amazon/{release}/lookup', array( 'as' => 'release-setting.amazon.lookup', 'uses' => 'ReleaseMetaController@lookup_amazon' ) );
+	Route::get( '/release-setting/itunes/{release}/lookup', array( 'as' => 'release-setting.itunes.lookup', 'uses' => 'ReleaseMetaController@lookup_itunes' ) );
+	Route::get( '/release-setting/musicbrainz/{release}/lookup', array( 'as' => 'release-setting.musicbrainz.lookup', 'uses' => 'ReleaseMetaController@lookup_musicbrainz' ) );
+	Route::get( '/release-setting/discogs/{release}/lookup', array( 'as' => 'release-setting.discogs.lookup', 'uses' => 'ReleaseMetaController@lookup_discogs' ) );
+	Route::post( '/release-setting/amazon/search', array( 'as' => 'release-setting.amazon.search', 'uses' => 'ReleaseMetaController@search_amazon' ) );
+	Route::post( '/release-setting/itunes/search', array( 'as' => 'release-setting.itunes.search', 'uses' => 'ReleaseMetaController@search_itunes' ) );
+	Route::post( '/release-setting/musicbrainz/search', array( 'as' => 'release.musicbrainz.search', 'uses' => 'ReleaseMetaController@search_musicbrainz' ) );
+	Route::post( '/release-setting/discogs/search', array( 'as' => 'release.discogs.search', 'uses' => 'ReleaseMetaController@search_discogs' ) );
 	Route::resource('release-setting', 'ReleaseMetaController');
 
 	// Tracks

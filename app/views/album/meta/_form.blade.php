@@ -9,7 +9,7 @@
 		{{ Form::text( 'musicbrainz_gid', $album->meta->musicbrainz_gid, array( 'class' => 'form-control' ) ) }}
 	</div>
 	<div class="col-sm-2">
-		<a href="{{ route( 'album.musicbrainz.lookup', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
+		<a href="{{ route( 'album-setting.musicbrainz.lookup', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 	</div>
 </div>
 
@@ -19,7 +19,7 @@
 		{{ Form::text( 'discogs_master_release_id', $album->meta->discogs_master_release_id, array( 'class' => 'form-control', 'data-toggle' => 'tooltip', 'title' => 'map to Master Release' ) ) }}
 	</div>
 	<div class="col-sm-2">
-		<a href="{{ route( 'album.discogs.lookup', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
+		<a href="{{ route( 'album-setting.discogs.lookup', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 	</div>
 </div>
 

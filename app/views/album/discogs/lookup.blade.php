@@ -25,7 +25,7 @@
 
 @section('content')
 <div class="col-md-12">
-	{{ Form::open( array( 'route' => 'album.discogs.search', 'class' => 'form-horizontal' ) ) }}
+	{{ Form::open( array( 'route' => 'album-setting.discogs.search', 'class' => 'form-horizontal' ) ) }}
 	<div class="form-group">
 		{{ Form::label( 'q_master_release', 'Title', array( 'class' => 'col-md-3' ) ) }}
 		<div class="col-md-9">

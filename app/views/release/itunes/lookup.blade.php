@@ -25,7 +25,7 @@
 
 @section('content')
 <div class="col-md-12">
-	{{ Form::open( array( 'route' => 'release.itunes.search', 'class' => 'form-horizontal' ) ) }}
+	{{ Form::open( array( 'route' => 'release-setting.itunes.search', 'class' => 'form-horizontal' ) ) }}
 	<div class="form-group">
 		<div class="form-group">
 			{{ Form::label( 'q_release', 'Title', array( 'class' => 'col-md-3' ) ) }}

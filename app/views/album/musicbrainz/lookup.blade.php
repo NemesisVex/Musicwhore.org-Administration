@@ -25,7 +25,7 @@
 
 @section('content')
 <div class="col-md-12">
-	{{ Form::open( array( 'route' => 'album.musicbrainz.search', 'class' => 'form-horizontal' ) ) }}
+	{{ Form::open( array( 'route' => 'album-setting.musicbrainz.search', 'class' => 'form-horizontal' ) ) }}
 	<div class="form-group">
 		<div class="col-md-10">
 			{{ Form::text( 'q_release_group', $q_release_group, array( 'class' => 'form-control' ) ) }}

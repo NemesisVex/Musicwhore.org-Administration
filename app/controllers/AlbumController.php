@@ -175,6 +175,12 @@ class AlbumController extends \BaseController {
 	}
 
 
+	/**
+	 * Show the form for deleting the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
 	public function delete($id) {
 
 		$method_variables = array(
@@ -185,6 +191,7 @@ class AlbumController extends \BaseController {
 
 		return View::make('album.delete', $data);
 	}
+
 
 	/**
 	 * Remove the specified resource from storage.
@@ -227,6 +234,12 @@ class AlbumController extends \BaseController {
 		}
 	}
 
+
+	/**
+	 * Save the order of albums.
+	 *
+	 * @return Response
+	 */
 	public function save_order() {
 		$albums = Input::get('albums');
 

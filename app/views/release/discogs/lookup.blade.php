@@ -59,7 +59,7 @@
 			<div class="radio">
 				<label class="discogs-result" title="{{ $discog_release->getId() }}" data-toggle="tooptip" data-placement="top">
 					{{ Form::radio( 'discogs_release_id', $discog_release->getId(), ($discog_release->getID() == $release->meta->discogs_release_id) ) }}
-					<a href="{{ $discog_release->getUri() }}">{{ $discog_release->getTitle() }}</a>
+					<a href="http://discogs.com{{ $discog_release->getUri() }}">{{ $discog_release->getTitle() }}</a>
 				</label>
 			</div>
 		</div>

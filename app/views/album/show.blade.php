@@ -98,7 +98,7 @@
 				<a href="http://musicbrainz.org/release-group/{{ $album->meta->musicbrainz_gid }}">{{ $album->meta->musicbrainz_gid }}</a>
 				@else
 				Not set
-				<a href="{{ route( 'album.musicbrainz.lookup', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
+				<a href="{{ route( 'album-setting.musicbrainz.lookup', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 				@endif
 			</div>
 		</li>
@@ -109,7 +109,7 @@
 				<a href="http://discogs.com/master/{{ $album->meta->discogs_master_release_id }}">{{ $album->meta->discogs_master_release_id }}</a>
 				@else
 				Not set
-				<a href="{{ route( 'album.discogs.lookup', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
+				<a href="{{ route( 'album-setting.discogs.lookup', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 				@endif
 			</div>
 		</li>

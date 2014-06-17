@@ -127,21 +127,24 @@
 <div class="form-group">
 	{{ Form::label( 'default_amazon_locale', 'Default Amazon locale:', array( 'class' => 'col-sm-3' ) ) }}
 	<div class="col-sm-9">
-		{{ Form::text( 'default_amazon_locale', $artist->meta->default_amazon_locale, array( 'class' => 'form-control' ) ) }}
+		{{ Form::select( 'default_amazon_locale', Config::get('amazon.locales'), $artist->meta->default_amazon_locale, array( 'class' => 'form-control' ) ) }}
 	</div>
 </div>
 
 <div class="form-group">
 	{{ Form::label( 'default_itunes_store', 'Default iTunes store:', array( 'class' => 'col-sm-3' ) ) }}
 	<div class="col-sm-9">
-		{{ Form::text( 'default_itunes_store', $artist->meta->default_itunes_store, array( 'class' => 'form-control' ) ) }}
+		{{ Form::select( 'default_itunes_store', Config::get('itunes.locales'), $artist->meta->default_itunes_store, array( 'class' => 'form-control' ) ) }}
 	</div>
 </div>
 
 <div class="form-group">
 	{{ Form::label( 'itunes_id', 'iTunes ID:', array( 'class' => 'col-sm-3' ) ) }}
-	<div class="col-sm-9">
+	<div class="col-sm-7">
 		{{ Form::text( 'itunes_id', $artist->meta->itunes_id, array( 'class' => 'form-control' ) ) }}
+	</div>
+	<div class="col-sm-2">
+		<a href="{{ route( 'artist-setting.itunes.lookup', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 	</div>
 </div>
 
