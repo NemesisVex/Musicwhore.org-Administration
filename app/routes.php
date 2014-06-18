@@ -52,6 +52,10 @@ Route::group(array('before' => 'auth'), function () {
 	Route::post( '/album-setting/discogs/search', array( 'as' => 'album-setting.discogs.search', 'uses' => 'AlbumController@search_discogs' ) );
 	Route::resource('album-setting', 'AlbumMetaController');
 
+	// AlbumMusicbrainz
+	Route::post( '/album-musicbrainz/search', array( 'as' => 'album-musicbrainz.search', 'uses' => 'AlbumMusicbrainzController@index' ) );
+	Route::resource( 'album-musicbrainz', 'AlbumMusicbrainzController' );
+
 	// Release
 	Route::model('release', 'Release');
 	Route::get( '/release/{release}/delete', array( 'as' => 'release.delete', 'uses' => 'ReleaseController@delete' ) );

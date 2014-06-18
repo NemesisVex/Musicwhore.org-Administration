@@ -234,7 +234,13 @@
 	<h3>Albums</h3>
 
 	<ul class="list-inline">
-		<li><a href="{{ route( 'album.create', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add album</a></li>
+		<li><a href="{{ route( 'album.create', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add album</a></li>
+	</ul>
+
+	<h4>Import</h4>
+
+	<ul class="list-inline">
+		<li><a href="{{ route( 'album-musicbrainz.index', array( 'arid' => $artist->meta->musicbrainz_gid, 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span> Musicbrainz</a></li>
 	</ul>
 
 	@if ($artist->albums->count() > 0)
