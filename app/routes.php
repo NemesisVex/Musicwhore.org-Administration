@@ -29,6 +29,10 @@ Route::group(array('before' => 'auth'), function () {
 	Route::post( '/artist-setting/itunes/{artist}/search', array( 'as' => 'artist-setting.itunes.serach', 'uses' => 'ArtistMetaController@search_itunes' ) );
 	Route::resource('artist-setting', 'ArtistMetaController');
 
+	// ArtistMusicbrainz
+	Route::post( '/artist-musicbrainz/search', array( 'as' => 'artist-musicbrainz.search', 'uses' => 'ArtistMusicbrainzController@index' ) );
+	Route::resource( 'artist-musicbrainz', 'ArtistMusicbrainzController' );
+
 	// Personnel
 	Route::model('personnel', 'Personnel');
 	Route::get( '/personnel/{personnel}/delete', array( 'as' => 'personnel.delete', 'uses' => 'PersonnelController@delete' ) );

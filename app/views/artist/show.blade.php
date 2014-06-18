@@ -196,7 +196,7 @@
 		<li class="row">
 			<label class="col-md-3">Musicbrainz GID:</label>
 			<div class="col-md-9">
-				{{ $artist->meta->musicbrainz_gid }}
+				<a href="{{ route( 'artist-musicbrainz.show', array( 'id' => $artist->meta->musicbrainz_gid, 'artist' => $artist->artist_id ) ) }}">{{ $artist->meta->musicbrainz_gid }}</a>
 			</div>
 		</li>
 		<li class="row">

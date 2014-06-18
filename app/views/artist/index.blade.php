@@ -14,9 +14,15 @@
 
 @section('content')
 <div class="col-md-12">
-	<p>
-		<a href="{{ route('artist.create') }}" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add an artist</a>
-	</p>
+	<ul class="list-inline">
+		<li><a href="{{ route('artist.create') }}" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add an artist</a></li>
+	</ul>
+
+	<h4>Import</h4>
+
+	<ul class="list-inline">
+		<li><a href="{{ route('artist-musicbrainz.index') }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span> Musicbrainz</a></li>
+	</ul>
 
 	<ul class="list-inline">
 		<li>Browse:</li>
