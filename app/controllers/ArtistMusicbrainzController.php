@@ -27,7 +27,17 @@ class ArtistMusicbrainzController extends \BaseController {
 	public function index()
 	{
 		$q_artist = Input::get('q_artist');
+		$artist_id = Input::get('artist');
 		$artists = null;
+		$artist = null;
+
+		if (!empty($artist_id)) {
+			$artist = Artist::find($artist_id);
+
+			if (empty($q_artist)) {
+				$q_artist = $artist->artist_display_name;
+			}
+		}
 
 		if (!empty($q_artist)) {
 			$brainz = new MusicBrainz( new GuzzleHttpAdapter( new Client() ) );
@@ -40,6 +50,7 @@ class ArtistMusicbrainzController extends \BaseController {
 		}
 
 		$method_variables = array(
+			'artist' => $artist,
 			'artists' => $artists,
 			'q_artist' => $q_artist,
 		);
@@ -58,6 +69,8 @@ class ArtistMusicbrainzController extends \BaseController {
 	public function create()
 	{
 		$gid = Input::get('musicbrainz_gid');
+		$default_amazon_locale = 'us';
+		$default_itunes_store = 'US';
 
 		if (!empty($gid)) {
 			$brainz = new MusicBrainz( new GuzzleHttpAdapter( new Client() ) );
@@ -69,11 +82,16 @@ class ArtistMusicbrainzController extends \BaseController {
 			$artist->artist_last_name = $brainz_artist->{ 'name' };
 			$artist->artist_sort_name = $brainz_artist->{ 'sort-name' };
 			$artist->artist_file_system = str_replace( ' ', '-', strtolower($brainz_artist->{ 'name' }) );
+
+			$default_amazon_locale = strtolower( $brainz_artist->{ 'country' } ) ;
+			$default_itunes_store = strtoupper( $brainz_artist->{ 'country' } );
 		}
 
 		$method_variables = array(
 			'artist' => $artist,
 			'gid' => $gid,
+			'default_amazon_locale' => $default_amazon_locale,
+			'default_itunes_store' => $default_itunes_store,
 		);
 
 		$data = array_merge($method_variables, $this->layout_variables);
@@ -100,12 +118,21 @@ class ArtistMusicbrainzController extends \BaseController {
 		$result = $artist->save();
 
 		if ($result !== false) {
+			$gid_meta = new ArtistMeta;
+			$gid_meta->meta_field_name = 'musicbrainz_gid';
+			$gid_meta->meta_field_value = Input::get('musicbrainz_gid');
 
-			$artist_meta = new ArtistMeta;
-			$artist_meta->meta_artist_id = $artist->artist_id;
-			$artist_meta->meta_field_name = 'musicbrainz_gid';
-			$artist_meta->meta_field_value = Input::get('musicbrainz_gid');
-			$artist_meta->save();
+			$amazon_meta = new ArtistMeta;
+			$amazon_meta->meta_field_name = 'default_amazon_locale';
+			$amazon_meta->meta_field_value = Input::get( 'default_amazon_locale' );
+
+			$itunes_meta = new ArtistMeta;
+			$itunes_meta->meta_field_name = 'default_itunes_locale';
+			$itunes_meta->meta_field_value = Input::get( 'default_itunes_locale' );
+
+			$settings = array( $gid_meta, $amazon_meta, $itunes_meta, );
+
+			$artist->meta()->saveMany($settings);
 
 			return Redirect::route('artist.show', array('id' => $artist->artist_id))->with('message', 'Your changes were saved.');
 		} else {
@@ -154,7 +181,29 @@ class ArtistMusicbrainzController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$brainz = new MusicBrainz( new GuzzleHttpAdapter( new Client() ) );
+		$brainz_artist = (object) $brainz->lookup( 'artist', $id );
+
+		$artist_id = Input::get('artist');
+		$artist = Artist::find($artist_id);
+
+		$artist->artist_last_name = $brainz_artist->{ 'name' };
+		$artist->artist_sort_name = $brainz_artist->{ 'sort-name' };
+		$artist->artist_file_system = str_replace( ' ', '-', strtolower($brainz_artist->{ 'name' }) );
+
+		$default_amazon_locale = strtolower( $brainz_artist->{ 'country' } );
+		$default_itunes_store = strtoupper( $brainz_artist->{ 'country' } );
+
+		$method_variables = array(
+			'artist' => $artist,
+			'gid' => $id,
+			'default_amazon_locale' => $default_amazon_locale,
+			'default_itunes_store' => $default_itunes_store,
+		);
+
+		$data = array_merge($method_variables, $this->layout_variables);
+
+		return View::make('artist.musicbrainz.edit', $data);
 	}
 
 
@@ -166,7 +215,27 @@ class ArtistMusicbrainzController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$artist = Artist::find($id);
+
+		$fields = $artist->getFillable();
+
+		foreach ($fields as $field) {
+			$artist->{$field} = Input::get($field);
+		}
+
+		$result = $artist->save();
+
+		if ($result !== false) {
+			$artist->meta->musicbrainz_gid = Input::get( 'musicbrainz_gid' );
+			$artist->meta->default_amazon_locale = Input::get( 'default_amazon_locale' );
+			$artist->meta->default_itunes_store = Input::get( 'default_itunes_store' );
+
+			$artist->meta->save();
+
+			return Redirect::route('artist.show', array('id' => $artist->artist_id))->with('message', 'Your changes were saved.');
+		} else {
+			return Redirect::route('artist.index')->with('error', 'Your changes were not saved.');
+		}
 	}
 
 

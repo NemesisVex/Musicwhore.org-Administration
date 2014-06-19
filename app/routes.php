@@ -33,6 +33,10 @@ Route::group(array('before' => 'auth'), function () {
 	Route::post( '/artist-musicbrainz/search', array( 'as' => 'artist-musicbrainz.search', 'uses' => 'ArtistMusicbrainzController@index' ) );
 	Route::resource( 'artist-musicbrainz', 'ArtistMusicbrainzController' );
 
+	// ArtistMusicbrainz
+	Route::post( '/artist-itunes/search', array( 'as' => 'artist-itunes.search', 'uses' => 'ArtistItunesController@index' ) );
+	Route::resource( 'artist-itunes', 'ArtistItunesController' );
+
 	// Personnel
 	Route::model('personnel', 'Personnel');
 	Route::get( '/personnel/{personnel}/delete', array( 'as' => 'personnel.delete', 'uses' => 'PersonnelController@delete' ) );

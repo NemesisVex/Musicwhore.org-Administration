@@ -13,6 +13,10 @@
 @stop
 
 @section('content')
+<ul class="list-inline">
+	<li><a href="{{ route( 'artist-musicbrainz.edit', array( 'id' => $gid, 'artist' => $artist->artist_id ) )  }}" class="btn btn-default"><span class="glyphicon glyphicon-import"></span> Update</a></li>
+</ul>
+
 <ul class="list-unstyled">
 	<li class="row">
 		<label class="col-md-3">Name:</label>

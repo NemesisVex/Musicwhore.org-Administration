@@ -1,11 +1,21 @@
 @extends('layout')
 
 @section('page_title')
- &raquo; Artists &raquo; Musicbrainz Import
+ &raquo; Artists
+@if (!empty($artist))
+ &raquo; {{ $artist->artist_display_name }}
+@endif
+ &raquo; Musicbrainz Import
 @stop
 
 @section('section_header')
-<h2>Artists</h2>
+<h2>
+	@if (!empty($artist))
+	{{ $artist->artist_display_name }}
+	@else
+	Artists
+	@endif
+</h2>
 @stop
 
 @section('section_label')
@@ -26,9 +36,16 @@
 	{{ Form::close() }}
 
 	@if ( count( $artists ) > 0 )
+
+	@if ( !empty($artist->artist_id) )
+	{{ Form::open( array( 'route' => array('artist-setting.update', $artist->artist_id), 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'put' ) ) }}
+
+	{{ Form::submit( 'Save', array( 'class' => 'btn btn-default' ) ) }}
+	@else
 	{{ Form::open( array( 'route' => 'artist-musicbrainz.create', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'get' ) ) }}
 
 	{{ Form::submit( 'Import', array( 'class' => 'btn btn-default' ) ) }}
+	@endif
 
 	@foreach ($artists as $brainz_artist)
 	<div class="form-group">

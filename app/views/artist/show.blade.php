@@ -196,7 +196,12 @@
 		<li class="row">
 			<label class="col-md-3">Musicbrainz GID:</label>
 			<div class="col-md-9">
+				@if ($artist->meta->musicbrainz_gid != null)
 				<a href="{{ route( 'artist-musicbrainz.show', array( 'id' => $artist->meta->musicbrainz_gid, 'artist' => $artist->artist_id ) ) }}">{{ $artist->meta->musicbrainz_gid }}</a>
+				@else
+				Not set
+				<a href="{{ route( 'artist-musicbrainz.index', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-search"></span> Look up</a>
+				@endif
 			</div>
 		</li>
 		<li class="row">
@@ -214,7 +219,12 @@
 		<li class="row">
 			<label class="col-md-3">iTunes ID:</label>
 			<div class="col-md-9">
+				@if ($artist->meta->itunes_id != null )
 				{{ $artist->meta->itunes_id }}
+				@else
+				Not set
+				<a href="{{ route( 'artist-itunes.index', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-search"></span> Look up</a>
+				@endif
 			</div>
 		</li>
 		<li class="row">

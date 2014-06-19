@@ -1,4 +1,4 @@
-@extends('artist._form')
+@extends('artist.musicbrainz._form')
 
 @section('page_title')
  &raquo; Artists &raquo; Add a new artist
@@ -15,6 +15,5 @@
 @section('content')
 {{ Form::model( $artist, array( 'route' => 'artist-musicbrainz.store', 'class' => 'form-horizontal', 'role' => 'form' ) ) }}
 @parent
-{{ Form::hidden( 'musicbrainz_gid', $gid ) }}
 {{ Form::close() }}
 @stop
