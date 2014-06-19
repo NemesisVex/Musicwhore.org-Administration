@@ -9,7 +9,7 @@
 @stop
 
 @section('section_label')
-<h3>Musicbrainz</h3>
+<h3>iTunes</h3>
 @stop
 
 @section('content')
