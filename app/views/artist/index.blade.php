@@ -22,6 +22,7 @@
 
 	<ul class="list-inline">
 		<li><a href="{{ route('artist-musicbrainz.index') }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-import"></span> Musicbrainz</a></li>
+		<li><a href="{{ route('artist-itunes.index') }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-import"></span> iTunes</a></li>
 	</ul>
 
 	<ul class="list-inline">

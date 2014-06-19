@@ -1,5 +1,10 @@
 <?php
 
+use \Guzzle\Http\Client;
+use \MusicBrainz\Filters\ArtistFilter;
+use \MusicBrainz\HttpAdapters\GuzzleHttpAdapter;
+use \MusicBrainz\MusicBrainz;
+
 class AlbumMetaController extends \BaseController {
 
 	private $layout_variables = array();
@@ -10,8 +15,6 @@ class AlbumMetaController extends \BaseController {
 		$this->layout_variables = array(
 			'config_url_base' => $config_url_base,
 		);
-
-		$this->beforeFilter('auth');
 
 		$this->beforeFilter('csrf', array( 'only' => array( 'store', 'update', 'destroy' ) ) );
 	}

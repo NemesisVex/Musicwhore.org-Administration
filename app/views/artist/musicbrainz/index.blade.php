@@ -62,7 +62,7 @@
 	</div>
 	@endforeach
 
-	{{ Form::submit( 'Save', array( 'class' => 'btn btn-default' ) ) }}
+	{{ Form::submit( !empty($artist->artist_id) ? 'Import' : 'Save', array( 'class' => 'btn btn-default' ) ) }}
 
 	{{ Form::close() }}
 	<script type="text/javascript">

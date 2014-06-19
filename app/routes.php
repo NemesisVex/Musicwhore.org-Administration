@@ -24,7 +24,6 @@ Route::group(array('before' => 'auth'), function () {
 	Route::get( '/artist-setting/musicbrainz/{artist}/lookup', array( 'as' => 'artist-setting.musicbrainz.lookup', 'uses' => 'ArtistMetaController@lookup_musicbrainz' ) );
 	Route::get( '/artist-setting/discogs/{artist}/lookup', array( 'as' => 'artist-setting.discogs.lookup', 'uses' => 'ArtistMetaController@lookup_discogs' ) );
 	Route::get( '/artist-setting/itunes/{artist}/lookup', array( 'as' => 'artist-setting.itunes.lookup', 'uses' => 'ArtistMetaController@lookup_itunes' ) );
-	Route::post( '/artist-setting/musicbrainz/search', array( 'as' => 'artist-setting.musicbrainz.search', 'uses' => 'ArtistMetaController@search_musicbrainz' ) );
 	Route::post( '/artist-setting/discogs/search', array( 'as' => 'artist-setting.discogs.search', 'uses' => 'ArtistMetaController@search_discogs' ) );
 	Route::post( '/artist-setting/itunes/{artist}/search', array( 'as' => 'artist-setting.itunes.serach', 'uses' => 'ArtistMetaController@search_itunes' ) );
 	Route::resource('artist-setting', 'ArtistMetaController');
@@ -33,7 +32,7 @@ Route::group(array('before' => 'auth'), function () {
 	Route::post( '/artist-musicbrainz/search', array( 'as' => 'artist-musicbrainz.search', 'uses' => 'ArtistMusicbrainzController@index' ) );
 	Route::resource( 'artist-musicbrainz', 'ArtistMusicbrainzController' );
 
-	// ArtistMusicbrainz
+	// ArtistItunes
 	Route::post( '/artist-itunes/search', array( 'as' => 'artist-itunes.search', 'uses' => 'ArtistItunesController@index' ) );
 	Route::resource( 'artist-itunes', 'ArtistItunesController' );
 
