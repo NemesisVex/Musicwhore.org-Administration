@@ -220,7 +220,7 @@
 			<label class="col-md-3">iTunes ID:</label>
 			<div class="col-md-9">
 				@if ($artist->meta->itunes_id != null )
-				{{ $artist->meta->itunes_id }}
+				<a href="{{ route( 'artist-itunes.show', array( 'id' => $artist->meta->itunes_id, 'artist' => $artist->artist_id ) ) }}">{{ $artist->meta->itunes_id }}</a>
 				@else
 				Not set
 				<a href="{{ route( 'artist-itunes.index', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-search"></span> Look up</a>
