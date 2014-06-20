@@ -6,9 +6,9 @@
 <h4>Settings</h4>
 
 <div class="form-group">
-	{{ Form::label( 'musicbrainz_gid', 'Musicbrainz GID:', array( 'class' => 'control-label col-md-2' ) ) }}
+	{{ Form::label( 'discogs_album_id', 'Discogs ID:', array( 'class' => 'control-label col-md-2' ) ) }}
 	<div class="col-md-10">
-		{{ Form::text( 'musicbrainz_gid', $gid, array( 'class' => 'form-control' ) ) }}
+		{{ Form::text( 'discogs_album_id', $discogs_album_id, array( 'class' => 'form-control' ) ) }}
 	</div>
 </div>
 
