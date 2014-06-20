@@ -64,7 +64,7 @@ class ArtistItunesController extends \BaseController {
 	 */
 	public function create()
 	{
-		$itunes_id = Input::get('itunes_artist_id');
+		$itunes_id = Input::get('itunes_id');
 
 		if (!empty($itunes_id)) {
 			$results = ITunes::lookup($itunes_id);

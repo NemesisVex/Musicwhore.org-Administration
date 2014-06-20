@@ -61,7 +61,7 @@
 		<div class="col-sm-12">
 			<div class="radio">
 				<label class="mb-result" title="{{ $itunes_artist->artistId }}" data-toggle="tooptip" data-placement="above">
-					{{ Form::radio( 'itunes_artist_id', $itunes_artist->artistId ) }}
+					{{ Form::radio( 'itunes_id', $itunes_artist->artistId ) }}
 					<a href="{{ $itunes_artist->artistLinkUrl }}">
 						{{ $itunes_artist->artistName }}
 					</a>

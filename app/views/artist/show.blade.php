@@ -194,17 +194,6 @@
 
 	<ul class="list-unstyled">
 		<li class="row">
-			<label class="col-md-3">Musicbrainz GID:</label>
-			<div class="col-md-9">
-				@if ($artist->meta->musicbrainz_gid != null)
-				<a href="{{ route( 'artist-musicbrainz.show', array( 'id' => $artist->meta->musicbrainz_gid, 'artist' => $artist->artist_id ) ) }}">{{ $artist->meta->musicbrainz_gid }}</a>
-				@else
-				Not set
-				<a href="{{ route( 'artist-musicbrainz.index', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-search"></span> Look up</a>
-				@endif
-			</div>
-		</li>
-		<li class="row">
 			<label class="col-md-3">Default Amazon locale:</label>
 			<div class="col-md-9">
 				{{ $artist->meta->default_amazon_locale }}
@@ -224,6 +213,28 @@
 				@else
 				Not set
 				<a href="{{ route( 'artist-itunes.index', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-search"></span> Look up</a>
+				@endif
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">Musicbrainz GID:</label>
+			<div class="col-md-9">
+				@if ($artist->meta->musicbrainz_gid != null)
+				<a href="{{ route( 'artist-musicbrainz.show', array( 'id' => $artist->meta->musicbrainz_gid, 'artist' => $artist->artist_id ) ) }}">{{ $artist->meta->musicbrainz_gid }}</a>
+				@else
+				Not set
+				<a href="{{ route( 'artist-musicbrainz.index', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-search"></span> Look up</a>
+				@endif
+			</div>
+		</li>
+		<li class="row">
+			<label class="col-md-3">Discogs ID:</label>
+			<div class="col-md-9">
+				@if ($artist->meta->discogs_artist_id != null)
+				<a href="{{ route( 'artist-discogs.show', array( 'id' => $artist->meta->discogs_artist_id, 'artist' => $artist->artist_id ) ) }}">{{ $artist->meta->discogs_artist_id }}</a>
+				@else
+				Not set
+				<a href="{{ route( 'artist-discogs.index', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-search"></span> Look up</a>
 				@endif
 			</div>
 		</li>
@@ -250,7 +261,8 @@
 	<h4>Import</h4>
 
 	<ul class="list-inline">
-		<li><a href="{{ route( 'album-musicbrainz.index', array( 'arid' => $artist->meta->musicbrainz_gid, 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus"></span> Musicbrainz</a></li>
+		<li><a href="{{ route( 'album-musicbrainz.index', array( 'arid' => $artist->meta->musicbrainz_gid, 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-import"></span> Musicbrainz</a></li>
+		<li><a href="{{ route( 'album-discogs.index', array( 'discogs_artist_id' => $artist->meta->discogs_artist_id, 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-import"></span> Discogs</a></li>
 	</ul>
 
 	@if ($artist->albums->count() > 0)

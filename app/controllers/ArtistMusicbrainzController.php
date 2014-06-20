@@ -187,7 +187,13 @@ class ArtistMusicbrainzController extends \BaseController {
 		$artist_id = Input::get('artist');
 		$artist = Artist::find($artist_id);
 
-		$artist->artist_last_name = $brainz_artist->{ 'name' };
+		if (!empty($brainz_artist->{ 'sort-name' })) {
+			list ($last_name, $first_name) = explode(', ', $brainz_artist->{ 'sort-name' });
+			$artist->artist_last_name = $last_name;
+			$artist->artist_first_name = $first_name;
+		} else {
+			$artist->artist_last_name = $brainz_artist->{ 'name' };
+		}
 		$artist->artist_sort_name = $brainz_artist->{ 'sort-name' };
 		$artist->artist_file_system = str_replace( ' ', '-', strtolower($brainz_artist->{ 'name' }) );
 

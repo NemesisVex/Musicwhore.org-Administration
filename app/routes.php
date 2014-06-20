@@ -36,6 +36,10 @@ Route::group(array('before' => 'auth'), function () {
 	Route::post( '/artist-itunes/search', array( 'as' => 'artist-itunes.search', 'uses' => 'ArtistItunesController@index' ) );
 	Route::resource( 'artist-itunes', 'ArtistItunesController' );
 
+	// ArtistItunes
+	Route::post( '/artist-discogs/search', array( 'as' => 'artist-discogs.search', 'uses' => 'ArtistDiscogsController@index' ) );
+	Route::resource( 'artist-discogs', 'ArtistDiscogsController' );
+
 	// Personnel
 	Route::model('personnel', 'Personnel');
 	Route::get( '/personnel/{personnel}/delete', array( 'as' => 'personnel.delete', 'uses' => 'PersonnelController@delete' ) );
@@ -58,6 +62,10 @@ Route::group(array('before' => 'auth'), function () {
 	// AlbumMusicbrainz
 	Route::post( '/album-musicbrainz/search', array( 'as' => 'album-musicbrainz.search', 'uses' => 'AlbumMusicbrainzController@index' ) );
 	Route::resource( 'album-musicbrainz', 'AlbumMusicbrainzController' );
+
+	// AlbumDiscogs
+	Route::post( '/album-discogs/search', array( 'as' => 'album-discogs.search', 'uses' => 'AlbumDiscogsController@index' ) );
+	Route::resource( 'album-discogs', 'AlbumDiscogsController' );
 
 	// Release
 	Route::model('release', 'Release');
