@@ -265,65 +265,6 @@ class AlbumController extends \BaseController {
 		return $album->save();
 	}
 
-	public function lookup_musicbrainz($id) {
-
-		$brainz = new MusicBrainz( new GuzzleHttpAdapter( new Client() ) );
-
-		$args = array(
-			'release' => $id->album_title,
-		);
-
-		if ($id->artist->meta->musicbrainz_gid != null) {
-			$args['arid'] = $id->artist->meta->musicbrainz_gid;
-		} else {
-			$args['artist'] = $id->artist->artist_display_name;
-		}
-
-		$release_groups = $brainz->search( new ReleaseGroupFilter( $args ) );
-
-		$method_variables = array(
-			'album' => $id,
-			'q_release_group' => $id->album_title,
-			'release_groups' => $release_groups,
-		);
-
-		$data = array_merge($method_variables, $this->layout_variables);
-
-		return View::make('album.musicbrainz.lookup', $data);
-	}
-
-	public function search_musicbrainz() {
-
-		$brainz = new MusicBrainz( new GuzzleHttpAdapter( new Client() ) );
-
-		$q_release_group = Input::get('q_release_group');
-		$arid = Input::get('arid');
-		$artist = Input::get('artist');
-		$id = Input::get('id');
-
-		$args = array(
-			'release' => $q_release_group,
-		);
-
-		if (!empty($arid)) {
-			$args['arid'] = $arid;
-		} elseif (!empty($artist)) {
-			$args['artist'] = $artist;
-		}
-
-		$release_groups = $brainz->search( new ReleaseGroupFilter( $args ) );
-
-		$method_variables = array(
-			'album' => Album::find($id),
-			'q_release_group' => $q_release_group,
-			'release_groups' => $release_groups,
-		);
-
-		$data = array_merge($method_variables, $this->layout_variables);
-
-		return View::make('album.musicbrainz.lookup', $data);
-	}
-
 	public function lookup_discogs($id) {
 
 		$discogs = new Discogs\Service();

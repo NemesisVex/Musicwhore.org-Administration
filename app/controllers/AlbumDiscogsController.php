@@ -1,5 +1,7 @@
 <?php
 
+use \Discogs;
+
 class AlbumDiscogsController extends \BaseController {
 
 	private $layout_variables = array();
@@ -21,13 +23,10 @@ class AlbumDiscogsController extends \BaseController {
 	 */
 	public function index()
 	{
-		$arid = Input::get('arid');
+		$discogs_artist_id = Input::get('discogs_artist_id');
 		$artist_id = Input::get('artist');
 
-		if (!empty($arid)) {
-			$brainz = new MusicBrainz( new GuzzleHttpAdapter( new Client() ) );
-
-			$brainz_artist = (object) $brainz->lookup( 'artist', $arid, array( 'release-groups' ) );
+		if (!empty($discogs_artist_id)) {
 		}
 
 		if (!empty($artist_id)) {
@@ -35,14 +34,12 @@ class AlbumDiscogsController extends \BaseController {
 		}
 
 		$method_variables = array(
-			'brainz_artist' => $brainz_artist,
 			'artist' => $artist,
-			'arid' => $arid,
 		);
 
 		$data = array_merge($method_variables, $this->layout_variables);
 
-		return View::make('album.musicbrainz.show', $data);
+		return View::make('album.discogs.index', $data);
 	}
 
 

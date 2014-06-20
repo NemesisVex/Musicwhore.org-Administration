@@ -30,6 +30,23 @@ class AlbumMusicbrainzController extends \BaseController {
 	{
 		$arid = Input::get('arid');
 		$artist_id = Input::get('artist');
+		$album_id = Input::get('album');
+
+		$brainz_artist = null;
+		$artist = null;
+		$album = null;
+
+		if (!empty($album_id)) {
+			$album = Album::find($album_id);
+
+			if (empty($artist_id)) {
+				$artist = $album->artist;
+			}
+
+			if (empty($arid) && $artist->meta->musicbrainz_gid != '') {
+				$arid = $artist->meta->musicbrainz_gid;
+			}
+		}
 
 		if (!empty($arid)) {
 			$brainz = new MusicBrainz( new GuzzleHttpAdapter( new Client() ) );
@@ -44,12 +61,13 @@ class AlbumMusicbrainzController extends \BaseController {
 		$method_variables = array(
 			'brainz_artist' => $brainz_artist,
 			'artist' => $artist,
+			'album' => $album,
 			'arid' => $arid,
 		);
 
 		$data = array_merge($method_variables, $this->layout_variables);
 
-		return View::make('album.musicbrainz.show', $data);
+		return View::make('album.musicbrainz.index', $data);
 	}
 
 
@@ -134,7 +152,27 @@ class AlbumMusicbrainzController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$album_id = Input::get('album');
+
+		if (!empty($id)) {
+			$brainz = new MusicBrainz( new GuzzleHttpAdapter( new Client() ) );
+
+			$brainz_album = (object) $brainz->lookup( 'release-group', $id );
+		}
+
+		if (!empty($album_id)) {
+			$album = Album::find($album_id);
+		}
+
+		$method_variables = array(
+			'brainz_album' => $brainz_album,
+			'album' => $album,
+			'gid' => $id,
+		);
+
+		$data = array_merge($method_variables, $this->layout_variables);
+
+		return View::make('album.musicbrainz.show', $data);
 	}
 
 
@@ -146,7 +184,27 @@ class AlbumMusicbrainzController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$brainz = new MusicBrainz( new GuzzleHttpAdapter( new Client() ) );
+		$brainz_album = (object) $brainz->lookup( 'release-group', $id );
+
+		$album_id = Input::get('album');
+		$album = Album::find($album_id);
+
+		$album->album_title = $brainz_album->title;
+		$album->album_release_date = $brainz_album->{ 'first-release-date' };
+
+		$formats = AlbumFormat::orderBy('format_alias')->get()->lists('format_alias', 'format_id');
+		$formats = array(0 => '&nbsp;') + $formats;
+
+		$method_variables = array(
+			'album' => $album,
+			'gid' => $id,
+			'formats' => $formats,
+		);
+
+		$data = array_merge($method_variables, $this->layout_variables);
+
+		return View::make('album.musicbrainz.edit', $data);
 	}
 
 
@@ -158,7 +216,24 @@ class AlbumMusicbrainzController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$album = Album::find($id);
+
+		$fields = $album->getFillable();
+
+		foreach ($fields as $field) {
+			$album->{$field} = Input::get($field);
+		}
+
+		$result = $album->save();
+
+		if ($result !== false) {
+			$album->meta->musicbrainz_gid = Input::get( 'musicbrainz_gid' );
+			$album->meta->save();
+
+			return Redirect::route('album.show', array('id' => $album->album_id))->with('message', 'Your changes were saved.');
+		} else {
+			return Redirect::route('artist.show', array('id' => Input::get( 'album_artist_id' ) ) )->with('error', 'Your changes were not saved.');
+		}
 	}
 
 

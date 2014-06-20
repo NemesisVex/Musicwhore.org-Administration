@@ -95,10 +95,10 @@
 			<label class="col-md-3">Musicbrainz GID</label>
 			<div class="col-md-9">
 				@if ($album->meta->musicbrainz_gid !== null)
-				<a href="http://musicbrainz.org/release-group/{{ $album->meta->musicbrainz_gid }}">{{ $album->meta->musicbrainz_gid }}</a>
+				<a href="{{ route( 'album-musicbrainz.show', array( 'id' => $album->meta->musicbrainz_gid, 'album' => $album->album_id ) ) }}">{{ $album->meta->musicbrainz_gid }}</a>
 				@else
 				Not set
-				<a href="{{ route( 'album-setting.musicbrainz.lookup', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
+				<a href="{{ route( 'album-musicbrainz.index', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 				@endif
 			</div>
 		</li>
