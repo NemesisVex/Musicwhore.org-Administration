@@ -1,0 +1,37 @@
+/*
+    Created on : May 25, 2014, 12:10:47 PM
+    Author     : gregbueno
+*/
+body {
+  font-family: "Merriweather Sans", Helvetica, Arial, sans-serif;
+  line-height: 2em;
+}
+h1.site-title a {
+  color: #000;
+}
+h1.site-title a:hover {
+  text-decoration: none;
+}
+h1.site-title small {
+  font-size: 50%;
+}
+h3.widget-title {
+  font-size: 20px;
+}
+h3.entry-title {
+  font-family: Lato, Helvetica, Arial, sans-serif;
+  text-transform: uppercase;
+}
+h3.entry-title a {
+  color: #000;
+  text-decoration: none;
+}
+.entry-meta {
+  font-variant: small-caps;
+}
+.entry-content {
+  font-family: Merriweather, Times, serif;
+}
+.comment-metadata {
+  font-variant: small-caps;
+}
