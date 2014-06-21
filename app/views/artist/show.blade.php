@@ -234,7 +234,6 @@
 				<a href="{{ route( 'artist-discogs.show', array( 'id' => $artist->meta->discogs_artist_id, 'artist' => $artist->artist_id ) ) }}">{{ $artist->meta->discogs_artist_id }}</a>
 				@else
 				Not set
-				<a href="{{ route( 'artist-discogs.index', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-search"></span> Look up</a>
 				@endif
 			</div>
 		</li>
@@ -262,7 +261,6 @@
 
 	<ul class="list-inline">
 		<li><a href="{{ route( 'album-musicbrainz.index', array( 'arid' => $artist->meta->musicbrainz_gid, 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-import"></span> Musicbrainz</a></li>
-		<li><a href="{{ route( 'album-discogs.index', array( 'discogs_artist_id' => $artist->meta->discogs_artist_id, 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-import"></span> Discogs</a></li>
 	</ul>
 
 	@if ($artist->albums->count() > 0)
