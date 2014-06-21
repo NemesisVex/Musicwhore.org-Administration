@@ -40,6 +40,10 @@ Route::group(array('before' => 'auth'), function () {
 	Route::post( '/artist-discogs/search', array( 'as' => 'artist-discogs.search', 'uses' => 'ArtistDiscogsController@index' ) );
 	Route::resource( 'artist-discogs', 'ArtistDiscogsController' );
 
+	// AmazonSearch
+	Route::post( '/amazon/search', array( 'as' => 'amazon.search', 'uses' => 'AmazonSearchController@index' ) );
+	Route::resource( 'amazon', 'AmazonSearchController' );
+
 	// Personnel
 	Route::model('personnel', 'Personnel');
 	Route::get( '/personnel/{personnel}/delete', array( 'as' => 'personnel.delete', 'uses' => 'PersonnelController@delete' ) );

@@ -19,7 +19,8 @@
 
 <div class="col-md-12">
 	<ul>
-		<li><a href="{{ route( 'artist.index', array('browse' => 'a') ) }}">Manage artist</a></li>
+		<li><a href="{{ route( 'artist.index', array('browse' => 'a') ) }}">Manage artists</a></li>
+		<li><a href="{{ route( 'amazon.index' ) }}">Amazon search</a></li>
 	</ul>
 </div>
 

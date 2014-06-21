@@ -22,4 +22,17 @@ return array(
 		'uk' => 'co.uk',
 		'jp' => 'co.jp',
 	),
+	'search_indexes' => array(
+		'All' => 'All',
+		'Books' => 'Books',
+		'Classical' => 'Classical',
+		'DigitalMusic' => 'Digital Music',
+		'DVD' => 'DVD',
+		'MP3Downloads' => 'MP3 Downloads',
+		'Music' => 'Music',
+		'MusicTracks' => 'Music Tracks',
+		'VHS' => 'VHS',
+		'Video' => 'Video',
+	),
+	'tag_base' => 'musicwhore-',
 );
