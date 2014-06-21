@@ -66,9 +66,11 @@ class AmazonSearchController extends \BaseController {
 
 			$response = simplexml_load_string($apaiIO->runOperation($search));
 			$results = json_decode(json_encode($response->Items));
+			$max_results = ($category == 'All') ? 50 : 100;
+			$total_results = $results->TotalResults > $max_results ? $max_results : $results->TotalResults;
 
 			if (!empty($results->Item)) {
-				$pagination = Paginator::make($results->Item, $results->TotalResults, ceil($results->TotalResults / $results->TotalPages) );
+				$pagination = Paginator::make($results->Item, $total_results, 10 );
 			}
 		}
 
