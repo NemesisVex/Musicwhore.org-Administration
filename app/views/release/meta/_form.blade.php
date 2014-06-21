@@ -7,7 +7,7 @@
 		{{ Form::text( 'asin_num', $release->meta->asin_num, array( 'class' => 'form-control' ) ) }}
 	</div>
 	<div class="col-sm-2">
-		<a href="{{ route( 'release.amazon.lookup', array( 'album' => $release->release_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
+		<a href="{{ route( 'release-setting.amazon.lookup', array( 'album' => $release->release_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 	</div>
 </div>
 
@@ -17,7 +17,7 @@
 		{{ Form::text( 'musicbrainz_gid', $release->meta->musicbrainz_gid, array( 'class' => 'form-control' ) ) }}
 	</div>
 	<div class="col-sm-2">
-		<a href="{{ route( 'release.musicbrainz.lookup', array( 'album' => $release->release_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
+		<a href="{{ route( 'release-setting.musicbrainz.lookup', array( 'album' => $release->release_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 	</div>
 </div>
 
@@ -27,7 +27,7 @@
 		{{ Form::text( 'discogs_release_id', $release->meta->discogs_release_id, array( 'class' => 'form-control' ) ) }}
 	</div>
 	<div class="col-sm-2">
-		<a href="{{ route( 'release.discogs.lookup', array( 'album' => $release->release_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
+		<a href="{{ route( 'release-setting.discogs.lookup', array( 'album' => $release->release_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 	</div>
 </div>
 
@@ -37,7 +37,7 @@
 		{{ Form::text( 'itunes_collection_id', $release->meta->itunes_collection_id, array( 'class' => 'form-control' ) ) }}
 	</div>
 	<div class="col-sm-2">
-		<a href="{{ route( 'release.itunes.lookup', array( 'album' => $release->release_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
+		<a href="{{ route( 'release-setting.itunes.lookup', array( 'album' => $release->release_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 	</div>
 </div>
 

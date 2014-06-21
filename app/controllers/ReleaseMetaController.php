@@ -1,8 +1,21 @@
 <?php
 
+use \Guzzle\Http\Client;
+use \MusicBrainz\Filters\ReleaseFilter;
+use \MusicBrainz\HttpAdapters\GuzzleHttpAdapter;
+use \MusicBrainz\MusicBrainz;
+use \Discogs;
+use ApaiIO\Configuration\GenericConfiguration;
+use ApaiIO\Operations\Search;
+use ApaiIO\ApaiIO;
+
 class ReleaseMetaController extends \BaseController {
 
 	private $layout_variables = array();
+	private $amazon_config;
+	private $associate_suffixes;
+	private $country_codes;
+	private $associate_tag_base = 'musicwhore-';
 
 	public function __construct() {
 		global $config_url_base;
@@ -10,6 +23,11 @@ class ReleaseMetaController extends \BaseController {
 		$this->layout_variables = array(
 			'config_url_base' => $config_url_base,
 		);
+
+		$this->amazon_config = new GenericConfiguration();
+		$this->amazon_config->setAccessKey(ACCESS_KEY_ID)->setSecretKey(SECRET_ACCESS_KEY);
+		$this->associate_suffixes = Config::get('amazon.associate_suffixes');
+		$this->country_codes = Config::get('amazon.country_codes');
 
 		$this->beforeFilter('auth');
 

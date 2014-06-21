@@ -25,7 +25,7 @@
 
 @section('content')
 <div class="col-md-12">
-	{{ Form::open( array( 'route' => 'release.amazon.search', 'class' => 'form-horizontal' ) ) }}
+	{{ Form::open( array( 'route' => 'release-setting.amazon.search', 'class' => 'form-horizontal' ) ) }}
 	<div class="form-group">
 		<div class="form-group">
 			{{ Form::label( 'q_release', 'Title', array( 'class' => 'col-md-3' ) ) }}
@@ -67,31 +67,52 @@
 	{{ Form::submit( 'Save', array( 'class' => 'btn btn-default' ) ) }}
 
 	@if (count($releases) > 0)
-	@foreach ($releases->Item as $amazon_release)
-	<div class="form-group">
-		<div class="col-sm-2">
-			<div class="radio">
-				<label class="mb-result" title="{{ $amazon_release->ASIN }}" data-toggle="tooptip" data-placement="above">
-					{{ Form::radio( 'asin_num', $amazon_release->ASIN, ($amazon_release->ASIN == $release->meta->asin_num) ) }}
-					<a href="http://amazon.{{ $domain }}/gp/product/{{ $amazon_release->ASIN }}">
-						@if (!empty($amazon_release->ASIN) )
-						{{ $amazon_release->ASIN }}
-						@else
-						Not set
-						@endif
-					</a>
-				</label>
-			</div>
-		</div>
-		<div class="col-sm-2">
-			{{ $amazon_release->ItemAttributes->EAN}}
-		</div>
-		<div class="col-sm-8">
-			{{ $amazon_release->ItemAttributes->Title}}
-		</div>
-	</div>
-	@endforeach
 
+	<table class="table">
+		<thead>
+		<tr>
+			<th>ASIN</th>
+			<th>Title</th>
+			<th>EAN</th>
+			<th>MPN</th>
+		</tr>
+		</thead>
+		<tbody>
+		@foreach ($releases->Item as $amazon_release)
+		<tr>
+			<td>
+				<div class="radio">
+					<label class="mb-result" title="{{ $amazon_release->ASIN }}" data-toggle="tooptip" data-placement="above">
+						{{ Form::radio( 'asin_num', $amazon_release->ASIN, ($amazon_release->ASIN == $release->meta->asin_num) ) }}
+						<a href="{{ $amazon_release->DetailPageURL }}">
+							@if (!empty($amazon_release->ASIN) )
+							{{ $amazon_release->ASIN }}
+							@else
+							Not set
+							@endif
+						</a>
+					</label>
+				</div>
+			</td>
+			<td>
+				@if (!empty($amazon_release->ItemAttributes->Title))
+				{{ $amazon_release->ItemAttributes->Title }}
+				@endif
+			</td>
+			<td>
+				@if (!empty($amazon_release->ItemAttributes->EAN))
+				{{ $amazon_release->ItemAttributes->EAN }}
+				@endif
+			</td>
+			<td>
+				@if (!empty($amazon_release->ItemAttributes->MPN))
+				{{ $amazon_release->ItemAttributes->MPN }}
+				@endif
+			</td>
+		</tr>
+		@endforeach
+		</tbody>
+	</table>
 
 	{{ Form::submit( 'Save', array( 'class' => 'btn btn-default' ) ) }}
 
