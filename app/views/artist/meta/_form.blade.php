@@ -118,16 +118,6 @@
 <h4>Ecommerce and external services</h4>
 
 <div class="form-group">
-	{{ Form::label( 'musicbrainz_gid', 'Musicbrainz GID:', array( 'class' => 'col-sm-3' ) ) }}
-	<div class="col-sm-7">
-		{{ Form::text( 'musicbrainz_gid', $artist->meta->musicbrainz_gid, array( 'class' => 'form-control' ) ) }}
-	</div>
-	<div class="col-sm-2">
-		<a href="{{ route( 'artist-musicbrainz.index', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
-	</div>
-</div>
-
-<div class="form-group">
 	{{ Form::label( 'default_amazon_locale', 'Default Amazon locale:', array( 'class' => 'col-sm-3' ) ) }}
 	<div class="col-sm-9">
 		{{ Form::select( 'default_amazon_locale', Config::get('amazon.locales'), $artist->meta->default_amazon_locale, array( 'class' => 'form-control' ) ) }}
@@ -148,6 +138,23 @@
 	</div>
 	<div class="col-sm-2">
 		<a href="{{ route( 'artist-itunes.index', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
+	</div>
+</div>
+
+<div class="form-group">
+	{{ Form::label( 'discogs_artist_id', 'Discogs ID:', array( 'class' => 'col-sm-3' ) ) }}
+	<div class="col-sm-9">
+		{{ Form::text( 'discogs_artist_id', $artist->meta->discogs_artist_id, array( 'class' => 'form-control' ) ) }}
+	</div>
+</div>
+
+<div class="form-group">
+	{{ Form::label( 'musicbrainz_gid', 'Musicbrainz GID:', array( 'class' => 'col-sm-3' ) ) }}
+	<div class="col-sm-7">
+		{{ Form::text( 'musicbrainz_gid', $artist->meta->musicbrainz_gid, array( 'class' => 'form-control' ) ) }}
+	</div>
+	<div class="col-sm-2">
+		<a href="{{ route( 'artist-musicbrainz.index', array( 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 	</div>
 </div>
 
