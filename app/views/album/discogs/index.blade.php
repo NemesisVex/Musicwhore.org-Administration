@@ -3,7 +3,7 @@
 @section('page_title')
  &raquo; {{ $artist->artist_display_name }}
  &raquo; Albums
- &raquo; Musicbrainz Import
+ &raquo; Discogs Import
 @stop
 
 @section('section_header')
@@ -13,7 +13,7 @@
 @section('section_label')
 <h3>
 	Albums
-	<small>Musicbrainz Import</small>
+	<small>Discogs Import</small>
 </h3>
 @stop
 
@@ -28,7 +28,7 @@
 	<div class="col-sm-12">
 		<div class="radio">
 			<label class="mb-result" title="{{ $discogs_album->getId() }}" data-toggle="tooptip" data-placement="above">
-				{{ Form::radio( 'discogs_album_id', $discogs_album->getId() ) }}
+				{{ Form::radio( 'discogs_master_release_id', $discogs_album->getId() ) }}
 				<a href="http://discogs.com{{ $discogs_album->getUri(); }}">{{ $discogs_album->getTitle() }}</a>
 			</label>
 		</div>

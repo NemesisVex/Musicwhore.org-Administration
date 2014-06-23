@@ -2,7 +2,7 @@
 
 @section('page_title')
  &raquo; {{ $album->artist->artist_display_name }}
- &raquo; Albums &raquo; Musicbrainz Import
+ &raquo; Albums &raquo; Discogs Import
 @stop
 
 @section('section_header')
@@ -10,7 +10,7 @@
 @stop
 
 @section('section_label')
-<h3>Musicbrainz import</h3>
+<h3>Discogs import</h3>
 @stop
 
 @section('content')

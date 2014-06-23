@@ -261,6 +261,7 @@
 
 	<ul class="list-inline">
 		<li><a href="{{ route( 'album-musicbrainz.index', array( 'arid' => $artist->meta->musicbrainz_gid, 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-import"></span> Musicbrainz</a></li>
+		<li><a href="{{ route( 'album-discogs.index', array( 'arid' => $artist->meta->discogs_artist_id, 'artist' => $artist->artist_id ) ) }}" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-import"></span> Discogs</a></li>
 	</ul>
 
 	@if ($artist->albums->count() > 0)

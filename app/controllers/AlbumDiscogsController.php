@@ -75,14 +75,14 @@ class AlbumDiscogsController extends \BaseController {
 	 */
 	public function create()
 	{
-		$discogs_album_id = Input::get('discogs_album_id');
+		$discogs_master_release_id = Input::get('discogs_master_release_id');
 		$artist_id = Input::get( 'album_artist_id' );
 		$album = null;
 
-		if (!empty($discogs_album_id)) {
+		if (!empty($discogs_master_release_id)) {
 			$discogs = new Discogs\Service();
 
-			$discogs_album = $discogs->getMaster($discogs_album_id);
+			$discogs_album = $discogs->getMaster($discogs_master_release_id);
 
 			$album = new Album;
 
@@ -99,7 +99,7 @@ class AlbumDiscogsController extends \BaseController {
 
 		$method_variables = array(
 			'album' => $album,
-			'discogs_album_id' => $discogs_album_id,
+			'discogs_master_release_id' => $discogs_master_release_id,
 			'formats' => $formats,
 		);
 
@@ -116,7 +116,27 @@ class AlbumDiscogsController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$album = new Album;
+
+		$fields = $album->getFillable();
+
+		foreach ($fields as $field) {
+			$album->{$field} = Input::get($field);
+		}
+
+		$result = $album->save();
+
+		if ($result !== false) {
+			$gid_meta = new AlbumMeta;
+			$gid_meta->meta_field_name = 'discogs_master_album_id';
+			$gid_meta->meta_field_value = Input::get('discogs_master_release_id');
+
+			$album->meta()->save($gid_meta);
+
+			return Redirect::route('album.show', array('id' => $album->album_id))->with('message', 'Your changes were saved.');
+		} else {
+			return Redirect::route('artist.show', array('id' => Input::get( 'album_artist_id' ) ) )->with('error', 'Your changes were not saved.');
+		}
 	}
 
 

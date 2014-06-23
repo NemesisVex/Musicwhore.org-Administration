@@ -106,10 +106,10 @@
 			<label class="col-md-3">Discogs ID</label>
 			<div class="col-md-9">
 				@if ($album->meta->discogs_master_release_id !== null)
-				<a href="http://discogs.com/master/{{ $album->meta->discogs_master_release_id }}">{{ $album->meta->discogs_master_release_id }}</a>
+				<a href="{{ route( 'album-discogs.show', array( 'album' => $album->meta->discogs_master_release_id ) ) }}">{{ $album->meta->discogs_master_release_id }}</a>
 				@else
 				Not set
-				<a href="{{ route( 'album-setting.discogs.lookup', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
+				<a href="{{ route( 'album-discogs.index', array( 'album' => $album->album_id ) ) }}" class="btn btn-default btn-sm">Look up</a>
 				@endif
 			</div>
 		</li>
