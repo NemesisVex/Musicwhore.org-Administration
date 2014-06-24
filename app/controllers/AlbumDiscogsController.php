@@ -148,7 +148,22 @@ class AlbumDiscogsController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$discogs = new Discogs\Service;
+
+		$discogs_master_release = $discogs->getMaster($id);
+
+		$album_id = Input::get('album');
+
+		$album = (!empty($album_id)) ? Album::find($album_id) : null;
+
+		$method_variables = array(
+			'album' => $album,
+			'discogs_master_release' => $discogs_master_release,
+		);
+
+		$data = array_merge($method_variables, $this->layout_variables);
+
+		return View::make('album.discogs.show', $data);
 	}
 
 
