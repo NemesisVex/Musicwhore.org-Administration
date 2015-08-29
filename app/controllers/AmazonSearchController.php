@@ -70,7 +70,11 @@ class AmazonSearchController extends \BaseController {
 			$total_results = $results->TotalResults > $max_results ? $max_results : $results->TotalResults;
 
 			if (!empty($results->Item)) {
-				$pagination = Paginator::make($results->Item, $total_results, 10 );
+				if (is_array($results->Item)) {
+					$pagination = Paginator::make($results->Item, $total_results, 10 );
+				} else {
+					$results->Item = array($results->Item);
+				}
 			}
 		}
 
