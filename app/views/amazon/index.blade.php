@@ -71,7 +71,8 @@
 	</tr>
 	</thead>
 	<tbody>
-	@foreach ($results->Item as $result)
+	@if (is_array($results->Item))
+		@foreach ($results->Item as $result)
 	<tr>
 		<td><a href="{{ $result->DetailPageURL }}">{{ $result->ASIN }}</a></td>
 		<td>
@@ -132,11 +133,14 @@
 			@endif
 		</td>
 	</tr>
-	@endforeach
+		@endforeach
+	@endif
 	</tbody>
 </table>
 
+@if (!empty($pagination))
 {{ $pagination->appends( array( 'q' => $q ) )->appends( array( 'category' => $category ) )->appends( array( 'locale' => $locale ) )->links() }}
+@endif
 
 @endif
 
