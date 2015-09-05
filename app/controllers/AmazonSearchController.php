@@ -21,9 +21,9 @@ class AmazonSearchController extends \BaseController {
 
 		$this->amazon_config = new GenericConfiguration();
 		$this->amazon_config->setAccessKey(ACCESS_KEY_ID)->setSecretKey(SECRET_ACCESS_KEY);
-		$this->associate_suffixes = Config::get('amazon.associate_suffixes');
+		$this->associate_suffixes = Config::get('amazon.associate_suffixes' );
 		$this->country_codes = Config::get('amazon.country_codes');
-		$this->associate_tag_base = Config::get( 'amazon.tag_base' );
+		$this->associate_tag_base = Config::get( 'amazon.tag_base', 'webservices' );
 
 		$this->beforeFilter('csrf', array( 'only' => array( 'store', 'update', 'destroy' ) ) );
 	}
