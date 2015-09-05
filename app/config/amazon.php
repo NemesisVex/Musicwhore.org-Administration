@@ -11,16 +11,19 @@ return array(
 		'us' => 'us',
 		'uk' => 'uk',
 		'jp' => 'jp',
+		'ca' => 'ca',
 	),
 	'associate_suffixes' => array(
 		'us' => '20',
 		'uk' => '21',
 		'jp' => '22',
+		'ca' => '23',
 	),
 	'country_codes' => array(
 		'us' => 'com',
 		'uk' => 'co.uk',
 		'jp' => 'co.jp',
+		'ca' => 'ca',
 	),
 	'search_indexes' => array(
 		'All' => 'All',
