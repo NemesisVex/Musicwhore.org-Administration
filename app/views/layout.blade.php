@@ -15,9 +15,9 @@
 	<link rel="stylesheet" href="/css/typography.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="/css/layout.css" type="text/css" media="screen, projection" />
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css" />
-	<link href='http://fonts.googleapis.com/css?family=Merriweather&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Merriweather+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Merriweather&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Merriweather+Sans&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script type="text/javascript" src="//code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
